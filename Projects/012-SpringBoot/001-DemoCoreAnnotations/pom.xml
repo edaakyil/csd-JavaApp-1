@@ -22,11 +22,6 @@
 
 	<repositories>
 		<repository>
-			<id>javaapp1-nov-2023-maven-repo</id>
-			<url>https://raw.github.com/oguzkaran/javaapp1-nov-2023-maven-repo/main</url>
-		</repository>
-
-		<repository>
 			<id>javaapp1-nov-2023-karandev-maven-repo</id>
 			<url>https://raw.github.com/oguzkaran/javaapp1-nov-2023-karandev-maven-repo/main</url>
 		</repository>
@@ -45,12 +40,12 @@
 		</dependency>
 
         <dependency>
-            <groupId>com.karandev</groupId>
-            <artifactId>com-karandev-spring-datetime</artifactId>
+            <groupId>com.edaakyil</groupId>
+            <artifactId>com-edaakyil-spring-lib-datetime</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
 
+        <dependency>
             <groupId>com.karandev</groupId>
             <artifactId>com-karandev-util-console</artifactId>
             <version>11.2.0</version>
