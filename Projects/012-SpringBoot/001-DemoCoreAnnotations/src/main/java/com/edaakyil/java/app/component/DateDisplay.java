@@ -9,16 +9,16 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class DateDisplay {
-    public DateDisplay()
+    private final LocalDate m_localDate;
+
+    public DateDisplay(LocalDate localDate)
     {
-        Console.writeLine("default ctor of DateDisplay");
+        m_localDate = localDate;
     }
 
     @PostConstruct
     public void displayLocalDate()
     {
-        var today = LocalDate.now();
-
-        Console.writeLine("DateDisplay: %s", today.format(DateTimeFormatter.ISO_DATE));
+        Console.writeLine("DateDisplay: %s", m_localDate.format(DateTimeFormatter.ISO_DATE));
     }
 }

@@ -3,14 +3,12 @@ package com.edaakyil.java.app.component;
 import com.karandev.io.util.console.Console;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-@ComponentScan("com.edaakyil")
 public class StartDateTimeDisplay {
     private final LocalDateTime m_startDateTime;
     private final DateTimeFormatter m_dateTimeFormatter;
@@ -29,7 +27,7 @@ public class StartDateTimeDisplay {
     @PostConstruct
     public void displayStartDateTime()
     {
-        //Console.writeLine("StartDateTimeDisplay - displayStartDateTime: %s", m_dateTimeFormatter.format(m_startDateTime));
-        Console.writeLine("StartDateTimeDisplay - displayStartDateTime: %s", m_startDateTime.format(m_dateTimeFormatter));
+        //Console.writeLine("StartDateTimeDisplay: %s", m_dateTimeFormatter.format(m_startDateTime));
+        Console.writeLine("StartDateTimeDisplay: %s", m_startDateTime.format(m_dateTimeFormatter));
     }
 }
