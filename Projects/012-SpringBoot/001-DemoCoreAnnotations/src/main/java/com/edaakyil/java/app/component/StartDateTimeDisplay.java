@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.edaakyil.spring.lib.datetime.constant.BeanName.DATETIME_FORMATTER_TR_BEAN;
+import static com.edaakyil.spring.lib.datetime.constant.BeanName.LOCAL_START_DATETIME_BEAN;
+
 @Component
 public class StartDateTimeDisplay {
     private final LocalDateTime m_startDateTime;
@@ -15,8 +18,8 @@ public class StartDateTimeDisplay {
 
     // StartDateTimeDisplay'e constructor injection yöntemi ile LocalDateTime ve DateTimeFormatter türlerini enjekte ettik.
     // constructor ile yapılan bu enjeckte işlemine dependency injection literatüründe "constructor injection" denilir.
-    public StartDateTimeDisplay(@Qualifier("com.edaakyil.datetime.local.start") LocalDateTime startDateTime,
-                                @Qualifier("com.edaakyil.datetime.format.tr") DateTimeFormatter dateTimeFormatter)
+    public StartDateTimeDisplay(@Qualifier(LOCAL_START_DATETIME_BEAN) LocalDateTime startDateTime,
+                                @Qualifier(DATETIME_FORMATTER_TR_BEAN) DateTimeFormatter dateTimeFormatter)
     {
         m_startDateTime = startDateTime;
         m_dateTimeFormatter = dateTimeFormatter;
