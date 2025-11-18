@@ -8,30 +8,32 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static com.edaakyil.spring.lib.datetime.constant.BeanName.*;
+
 @Configuration
-public class DateTimeConfig {
-    @Bean("com.edaakyil.time.current")
+public class LocalDateTimeConfig {
+    @Bean(LOCAL_CURRENT_TIME_BEAN)
     @Scope("prototype")
     public LocalTime currentTime()
     {
         return LocalTime.now();
     }
 
-    @Bean("com.edaakyil.date.current")
+    @Bean(LOCAL_CURRENT_DATE_BEAN)
     @Scope("prototype")
     public LocalDate currentDate()
     {
         return LocalDate.now();
     }
 
-    @Bean("com.edaakyil.datetime.current")
+    @Bean(LOCAL_CURRENT_DATETIME_BEAN)
     @Scope("prototype")
     public LocalDateTime currentLocalDateTime()
     {
         return LocalDateTime.now();
     }
 
-    @Bean("com.edaakyil.datetime.start")
+    @Bean(LOCAL_START_DATETIME_BEAN)
     public LocalDateTime startDateTime()
     {
         return LocalDateTime.now();

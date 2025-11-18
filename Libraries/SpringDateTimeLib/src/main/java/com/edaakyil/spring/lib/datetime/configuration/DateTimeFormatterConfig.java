@@ -5,23 +5,43 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.format.DateTimeFormatter;
 
+import static com.edaakyil.spring.lib.datetime.constant.BeanName.*;
+
 @Configuration
 public class DateTimeFormatterConfig {
-    @Bean("com.edaakyil.time.format")
-    public DateTimeFormatter formatTime()
+    @Bean(TIME_FORMATTER_TR_BEAN)
+    public DateTimeFormatter createTimeFormatterTR()
     {
-        return DateTimeFormatter.ofPattern("HH:mm:ss");
+        return DateTimeFormatter.ofPattern("HH.mm.ss");
     }
 
-    @Bean("com.edaakyil.date.format")
-    public DateTimeFormatter formatDate()
+    @Bean(DATE_FORMATTER_TR_BEAN)
+    public DateTimeFormatter createDateFormatterTR()
     {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy");
     }
 
-    @Bean("com.edaakyil.datetime.format")
-    public DateTimeFormatter formatDateTime()
+    @Bean(DATETIME_FORMATTER_TR_BEAN)
+    public DateTimeFormatter createDateTimeFormatterTR()
     {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy HH.mm.ss");
+    }
+
+    @Bean(CUSTOM_TIME_FORMATTER_BEAN)
+    public DateTimeFormatter createCustomTimeFormatter()
+    {
+        return DateTimeFormatter.ofPattern("HH.mm.ss");
+    }
+
+    @Bean(CUSTOM_DATE_FORMATTER_BEAN)
+    public DateTimeFormatter createCustomDateFormatter()
+    {
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    }
+
+    @Bean(CUSTOM_DATETIME_FORMATTER_BEAN)
+    public DateTimeFormatter createCustomDateTimeFormatter()
+    {
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy HH.mm.ss");
     }
 }

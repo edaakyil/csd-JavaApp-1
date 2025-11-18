@@ -15,13 +15,11 @@ public class StartDateTimeDisplay {
 
     // StartDateTimeDisplay'e constructor injection yöntemi ile LocalDateTime ve DateTimeFormatter türlerini enjekte ettik.
     // constructor ile yapılan bu enjeckte işlemine dependency injection literatüründe "constructor injection" denilir.
-    public StartDateTimeDisplay(@Qualifier("com.edaakyil.datetime.start") LocalDateTime startDateTime,
-                                @Qualifier("com.edaakyil.datetime.format") DateTimeFormatter dateTimeFormatter)
+    public StartDateTimeDisplay(@Qualifier("com.edaakyil.datetime.local.start") LocalDateTime startDateTime,
+                                @Qualifier("com.edaakyil.datetime.format.tr") DateTimeFormatter dateTimeFormatter)
     {
         m_startDateTime = startDateTime;
         m_dateTimeFormatter = dateTimeFormatter;
-
-        Console.writeLine("default ctor of StartDateTimeDisplay");
     }
 
     @PostConstruct
