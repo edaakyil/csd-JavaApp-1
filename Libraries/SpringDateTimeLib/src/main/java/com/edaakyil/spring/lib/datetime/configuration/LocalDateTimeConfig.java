@@ -2,6 +2,7 @@ package com.edaakyil.spring.lib.datetime.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class LocalDateTimeConfig {
 
     @Bean(LOCAL_CURRENT_DATETIME_BEAN)
     @Scope("prototype")
+    @Primary
     public LocalDateTime currentLocalDateTime()
     {
         return LocalDateTime.now();

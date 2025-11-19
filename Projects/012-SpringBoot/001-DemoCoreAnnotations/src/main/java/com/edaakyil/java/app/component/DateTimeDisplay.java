@@ -25,7 +25,7 @@ public class DateTimeDisplay {
     private final DateTimeFormatter m_formatter;
 
     public DateTimeDisplay(ApplicationContext context,
-                           @Qualifier(DATETIME_FORMATTER_TR_BEAN) DateTimeFormatter formatter)
+                           DateTimeFormatter formatter)
     {
         m_context = context;
         m_formatter = formatter;
