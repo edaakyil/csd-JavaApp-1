@@ -18,7 +18,7 @@ public class StartDateTimeDisplay {
 
     // Property injection
     // .properties dosyasından otomatik olarak enjekte etmesi için @Value annotation'ı kullanılır
-    @Value("${app.message.datetime.start}")
+    @Value("${app.message.datetime.start:Start}")
     private String m_message;
 
     // StartDateTimeDisplay'e constructor injection yöntemi ile LocalDateTime ve DateTimeFormatter türlerini enjekte ettik.
