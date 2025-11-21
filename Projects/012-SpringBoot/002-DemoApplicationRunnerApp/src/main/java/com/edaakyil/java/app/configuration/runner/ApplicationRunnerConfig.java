@@ -1,4 +1,4 @@
-package com.edaakyil.java.app.runner;
+package com.edaakyil.java.app.configuration.runner;
 
 import com.karandev.io.util.console.Console;
 import org.springframework.boot.ApplicationArguments;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationRunnerConfig {
     private void applicationRunnerCallback(ApplicationArguments applicationArguments)
     {
-        Console.writeLine("Application runner");
+        Console.writeLine("Bean ApplicationRunner");
     }
 
     @Bean
