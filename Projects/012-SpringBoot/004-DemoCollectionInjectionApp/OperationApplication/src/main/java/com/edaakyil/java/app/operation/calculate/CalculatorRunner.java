@@ -22,6 +22,7 @@ public class CalculatorRunner implements ApplicationRunner {
 
     public CalculatorRunner(@Qualifier(LOCAL_CURRENT_DATETIME_BEAN) LocalDateTime currentDateTime,
                             @Qualifier(DATETIME_FORMATTER_TR_BEAN) DateTimeFormatter dateTimeFormatter,
+                            // IIntOperation arayüzünü implemente eden bütün bean'leri Collection'a enjekte ediyor
                             Collection<IIntOperation> operations)
     {
         m_operations = operations;
@@ -34,8 +35,10 @@ public class CalculatorRunner implements ApplicationRunner {
     {
         try {
             var operatorValue = args.getOptionValues("operator");
-            var a = Integer.parseInt(args.getOptionValues("left").get(0));
-            var b = Integer.parseInt(args.getOptionValues("right").get(0));
+            var leftOptionValue = args.getOptionValues("left");
+            var rightOptionValue = args.getOptionValues("right");
+            var a = leftOptionValue != null ? Integer.parseInt(leftOptionValue.get(0)) : 67;
+            var b = rightOptionValue != null ? Integer.parseInt(rightOptionValue.get(0)) : 67;
             char op = '+';
 
             if (operatorValue != null && operatorValue.size() == 1)
@@ -49,7 +52,7 @@ public class CalculatorRunner implements ApplicationRunner {
             if (!operations.isEmpty())
                 operations.forEach(o -> Console.writeLine("%d %c %d = %d", a, operator, b, o.applyAsInt(a, b)));
             else
-                Console.writeLine("No supported operation!...");
+                Console.writeLine("Unsupported operation!...");
 
         } catch (NumberFormatException ignore) {
             Console.Error.writeLine("Invalid values!...");
