@@ -27,4 +27,22 @@ public class MyApplicationRunner implements ApplicationRunner {
     }
 }
 
-// option arguments --> Spring'in komut satırı argümanı veriliş biçimi (-- ile verilen biçim)
+// option arguments --> Spring'in komutsatırı argümanı veriliş biçimi (-- ile verilen biçim)
+// non-option arguments --> Normal komutsatırı argümanları
+
+/*
+* > java -jar .\ApplicationRunnerApp-1.0.0.jar fatih zeynep ahmet "mehmet sena" --eda="neslihan akyıl" --cevriye=muammer
+* veya
+* > java -jar .\ApplicationRunnerApp-1.0.0.jar --eda="neslihan akyıl" --cevriye=muammer fatih zeynep ahmet "mehmet sena"
+*
+* option arguments:
+*   --eda=neslihan akyıl"
+*   --cevriye=muammer
+*
+* non-option arguments:
+*   fatih
+*   zeynep
+*   ahmet
+*   "mehmet sena"
+*
+ */
