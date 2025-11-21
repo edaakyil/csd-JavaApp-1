@@ -21,6 +21,7 @@ public class StartDateTimeDisplay {
     @Value("${app.message.datetime.start:Start}")
     private String m_message;
 
+    // ctor injection
     // StartDateTimeDisplay'e constructor injection yöntemi ile LocalDateTime ve DateTimeFormatter türlerini enjekte ettik.
     // constructor ile yapılan bu enjeckte işlemine dependency injection literatüründe "constructor injection" denilir.
     public StartDateTimeDisplay(@Qualifier(LOCAL_START_DATETIME_BEAN) LocalDateTime startDateTime,
