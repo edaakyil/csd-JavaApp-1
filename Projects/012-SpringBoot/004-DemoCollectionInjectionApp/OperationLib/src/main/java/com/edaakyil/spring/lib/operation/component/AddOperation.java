@@ -10,7 +10,7 @@ public class AddOperation implements IIntOperation {
     @Override
     public int applyAsInt(int left, int right)
     {
-        log.warn("AddOperation::applyAsInt invoked via: {}, {}", left, right);
+        log.info("AddOperation::applyAsInt invoked via: {}, {}", left, right);
 
         return left + right;
     }
@@ -18,7 +18,7 @@ public class AddOperation implements IIntOperation {
     @Override
     public boolean isValid(char op)
     {
-        log.warn("AddOperation::isValid invoked via: {}", op);
+        log.info("AddOperation::isValid invoked via: {}", op);
 
         return op == '+';
     }
