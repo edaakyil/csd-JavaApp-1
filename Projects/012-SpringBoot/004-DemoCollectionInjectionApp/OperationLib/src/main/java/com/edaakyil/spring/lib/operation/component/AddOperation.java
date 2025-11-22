@@ -18,7 +18,7 @@ public class AddOperation implements IIntOperation {
     @Override
     public boolean isValid(char op)
     {
-        log.warn("AddOperation::applyAsInt invoked via: {}", op);
+        log.warn("AddOperation::isValid invoked via: {}", op);
 
         return op == '+';
     }
