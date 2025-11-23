@@ -35,6 +35,7 @@ public class TextGeneratorRunner implements ApplicationRunner {
             var text = StringUtil.generateRandomTextEN(m_randomGenerator, m_randomGenerator.nextInt(m_min, m_bound));
             Console.writeLine("Generated Text: %s", text);
         } catch (Throwable ex) {
+            m_scheduler.cancel();
             log.error("Exception occurred: {}", ex.getMessage());
         }
     }
