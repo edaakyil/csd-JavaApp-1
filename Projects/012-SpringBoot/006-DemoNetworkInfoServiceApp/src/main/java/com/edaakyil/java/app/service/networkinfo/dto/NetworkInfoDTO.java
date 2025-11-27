@@ -9,6 +9,10 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
+/**
+ * NetworkInfoDTO sınıfı, data'yı taşıyacak olan katmandır.
+ */
+
 @Data
 @Builder
 public class NetworkInfoDTO {
@@ -22,10 +26,13 @@ public class NetworkInfoDTO {
     private String m_lastName;
 
     @Accessors(prefix = "m_")
-    private int m_localPort;
+    private int m_age;
 
     @Accessors(prefix = "m_")
-    private int m_remotePort; // ephemeral port
+    private int m_localPort;  // bağlantının sağlandığı port numarası
+
+    @Accessors(prefix = "m_")
+    private int m_remotePort; // (ephemeral port) iletimin yapıldığı port numarası
 
     @Accessors(prefix = "m_")
     private String m_remoteHost;
@@ -38,6 +45,7 @@ public class NetworkInfoDTO {
     @Accessors(prefix = "m_")
     private LocalDateTime m_serviceRequestTime;
 
+    // Eğer middleName'in değeri null ise middleName dahil edilmiyecek (görünmeyecek)
     // lombok'un getter'ını ezdik
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getMiddleName()
