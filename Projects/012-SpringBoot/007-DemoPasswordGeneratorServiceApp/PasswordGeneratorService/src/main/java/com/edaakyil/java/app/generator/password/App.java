@@ -1,4 +1,4 @@
-package com.edaakyil.java.app;
+package com.edaakyil.java.app.generator.password;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

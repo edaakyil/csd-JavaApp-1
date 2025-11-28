@@ -40,6 +40,7 @@ public class UserInfoRepository implements IUserInfoRepository {
     {
         try {
             bw.write(String.format("%s\r\n", password));
+
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
