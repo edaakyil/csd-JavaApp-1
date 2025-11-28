@@ -3,6 +3,8 @@ package com.edaakyil.generator.password.data.service;
 import com.edaakyil.generator.password.dal.PasswordGeneratorHelper;
 import com.edaakyil.generator.password.data.service.dto.UserInfoSaveDTO;
 import com.edaakyil.generator.password.data.service.mapper.IUserInfoMapper;
+import com.edaakyil.java.lib.data.repository.exception.RepositoryException;
+import com.edaakyil.java.lib.data.service.exception.DataServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,21 @@ public class PasswordGeneratorDataService {
 
     public boolean saveUserInfo(UserInfoSaveDTO userInfoSaveDTO)
     {
-        log.info("PasswordGeneratorService.saveUserInfo: {}", userInfoSaveDTO.toString());
+        try {
+            log.info("PasswordGeneratorService.saveUserInfo: {}", userInfoSaveDTO.toString());
 
-        return m_passwordGeneratorHelper.saveUserIfNotExists(m_userInfoMapper.toUserInfo(userInfoSaveDTO)).isPresent();
+            return m_passwordGeneratorHelper.saveUserIfNotExists(m_userInfoMapper.toUserInfo(userInfoSaveDTO)).isPresent();
+
+        } catch (RepositoryException ex) {
+            log.error("PasswordGeneratorDataService.saveUserInfo -> RepositoryException: {}", ex.getMessage());
+
+            throw new DataServiceException("PasswordGeneratorDataService.saveUserInfo -> RepositoryException", ex);
+
+        } catch (Throwable ex) {
+            log.error("PasswordGeneratorDataService.saveUserInfo -> Any Exception: Exception: {}, Message: {}",
+                    ex.getClass().getSimpleName(), ex.getMessage());
+
+            throw new DataServiceException("PasswordGeneratorDataService.saveUserInfo -> Any Exception", ex);
+        }
     }
 }
