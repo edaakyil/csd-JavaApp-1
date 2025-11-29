@@ -8,6 +8,8 @@ import com.edaakyil.java.lib.data.service.exception.DataServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class PasswordGeneratorDataService {
@@ -18,6 +20,11 @@ public class PasswordGeneratorDataService {
     {
         m_passwordGeneratorHelper = passwordGeneratorHelper;
         m_userInfoMapper = userInfoMapper;
+    }
+
+    public List<String> findAllUsernames()
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
     }
 
     public boolean saveUserInfo(UserInfoSaveDTO userInfoSaveDTO)

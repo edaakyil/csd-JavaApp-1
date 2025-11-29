@@ -117,7 +117,9 @@ public class UserInfoRepository implements IUserInfoRepository {
     public Iterable<UserInfo> findAll()
     {
         try {
-            return Files.walk(m_directory.toPath()).map(p -> new UserInfo(p.getFileName().toString())).toList();
+            // walk() metodu bize bir directory'nin içini dolaşabilme imkanı veriyor
+            // walk() metodu tüm directory içerisindeki dosylardan oluşan bir stream veriyor
+            return Files.walk(m_directory.toPath()).map(path -> new UserInfo(path.getFileName().toString())).toList();
 
         } catch (IOException ex) {
             throw new RepositoryException("UserInfoRepository.findAll: IO problem", ex);

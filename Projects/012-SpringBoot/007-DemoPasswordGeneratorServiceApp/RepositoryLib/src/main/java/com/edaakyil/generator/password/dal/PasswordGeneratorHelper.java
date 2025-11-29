@@ -29,6 +29,7 @@ public class PasswordGeneratorHelper {
     {
         log.info("PasswordGeneratorHelper.findAllUsernames");
 
+        // Aşağıdaki toList() metodunun kullanımında Iterable'dan List'e dönüştürüyor.
         return StreamSupport.stream(m_userInfoRepository.findAll().spliterator(), false)
                 .map(UserInfo::getUsername).toList();
     }
