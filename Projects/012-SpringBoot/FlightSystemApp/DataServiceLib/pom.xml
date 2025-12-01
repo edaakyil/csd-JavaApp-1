@@ -12,13 +12,15 @@
     </parent>
 
     <groupId>com.edaakyil</groupId>
-    <artifactId>FlightSystemRepositoryLib</artifactId>
+    <artifactId>FlightSystemDataServiceLib</artifactId>
     <version>1.0.0</version>
-    <name>FlightSystemRepositoryLib</name>
+    <name>FlightSystemDataServiceLib</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <org.projectlombok.version>1.18.34</org.projectlombok.version>
         <com.edaakyil.data.version>1.0.0</com.edaakyil.data.version>
     </properties>
@@ -30,9 +32,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
         </dependency>
 
         <dependency>
@@ -47,6 +49,12 @@
             <artifactId>com-edaakyil-java-lib-data</artifactId>
             <version>${com.edaakyil.data.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.edaakyil</groupId>
+            <artifactId>FlightSystemRepositoryLib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -55,6 +63,29 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.32</version>
+                        </path>
+
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>
