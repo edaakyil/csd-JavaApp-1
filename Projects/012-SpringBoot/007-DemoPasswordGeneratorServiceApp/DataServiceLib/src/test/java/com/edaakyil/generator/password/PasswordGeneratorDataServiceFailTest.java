@@ -3,7 +3,6 @@ package com.edaakyil.generator.password;
 import com.edaakyil.generator.password.dal.PasswordGeneratorHelper;
 import com.edaakyil.generator.password.data.service.PasswordGeneratorDataService;
 import com.edaakyil.generator.password.data.service.dto.UserInfoSaveDTO;
-import com.edaakyil.generator.password.data.service.mapper.UserInfoMapper;
 import com.edaakyil.generator.password.repository.UserInfoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

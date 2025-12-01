@@ -1,10 +1,9 @@
-package com.edaakyil.generator.password.data.service.mapper;
+package com.edaakyil.generator.password;
 
 import com.edaakyil.generator.password.data.service.dto.UserInfoSaveDTO;
+import com.edaakyil.generator.password.data.service.mapper.IUserInfoMapper;
 import com.edaakyil.generator.password.entity.UserInfo;
-import org.springframework.stereotype.Component;
 
-@Component
 public class UserInfoMapper implements IUserInfoMapper {
     @Override
     public UserInfo toUserInfo(UserInfoSaveDTO userInfoSaveDTO)
