@@ -3,9 +3,14 @@ package com.edaakyil.flight.data.repository;
 import com.edaakyil.flight.data.entity.Country;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Repository
@@ -13,10 +18,24 @@ import java.util.Optional;
 @Slf4j
 public class CountryRepository implements ICountryRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
+    // Cümleleri üretme:
+    private static final String FIND_ALL_SQL = "SELECT * FROM countries";
+    private static final String FIND_BY_ID_SQL = "SELECT * FROM countries WHERE id = :id";
+    private static final String SAVE_SQL = "INSERT INTO countries (name) VALUES (:name)";
 
     public CountryRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
         m_namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    private void fillCountries(ArrayList<Country> countries, ResultSet rs) throws SQLException
+    {
+        do
+            // tablonun alan isimlerinin kullanılmasının avantajıları daha algılanabilir olmasıdır ve alanların bildirim sırasının bilinmesinin gerek olmamasıdır.
+            // index kullanmanın bir avantajı hızlı işlem yapmaktır.
+            countries.add(new Country(rs.getLong(1), rs.getString(2))); // index kullanmanın bir avantajı hızlı işlem yapmaktır.
+            //countries.add(new Country(rs.getLong("country_id"), rs.getString("name"))); // daha yavaş.
+        while (rs.next());
     }
 
     @Override
@@ -64,13 +83,24 @@ public class CountryRepository implements ICountryRepository {
     @Override
     public Optional<Country> findById(Long id)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        var countries = new ArrayList<Country>();
+        var paramMap = new HashMap<String, Object>();
+
+        paramMap.put("id", id);
+
+        m_namedParameterJdbcTemplate.query(FIND_BY_ID_SQL, paramMap, (ResultSet rs) -> fillCountries(countries, rs));
+
+        return countries.isEmpty() ? Optional.empty() : Optional.of(countries.get(0));
     }
 
     @Override
     public Iterable<Country> findAll()
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        var countries = new ArrayList<Country>();
+
+        m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, rs -> { fillCountries(countries, rs); });
+
+        return countries;
     }
 
     @Override
@@ -82,7 +112,11 @@ public class CountryRepository implements ICountryRepository {
     @Override
     public <S extends Country> S save(S country)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        var parameterSource = new BeanPropertySqlParameterSource(country);
+
+        m_namedParameterJdbcTemplate.update(SAVE_SQL, parameterSource);
+
+        return country;
     }
 
     @Override
