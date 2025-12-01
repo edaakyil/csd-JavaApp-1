@@ -13,6 +13,8 @@ import java.util.Optional;
 @Slf4j
 public class AirportRepository implements IAirportRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
+    // Cümleleri üretme:
+    private static final String SAVE_SQL = "INSERT INTO airports (name, city_id) VALUES (:name, :cityId)";
 
     public AirportRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {

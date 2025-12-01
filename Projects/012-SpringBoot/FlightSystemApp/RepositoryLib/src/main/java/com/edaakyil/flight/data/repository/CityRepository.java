@@ -21,7 +21,7 @@ public class CityRepository implements ICityRepository {
     // Cümleleri üretme:
     private static final String FIND_ALL_SQL = "SELECT * FROM cities";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE id = :id";
-    private static final String SAVE_SQL = "INSERT INTO cities (name, country_id) values (:name, :country_id)";
+    private static final String SAVE_SQL = "INSERT INTO cities (name, country_id) VALUES (:name, :countryId)";
 
     public CityRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
