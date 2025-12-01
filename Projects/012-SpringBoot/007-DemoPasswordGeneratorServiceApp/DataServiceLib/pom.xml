@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>com.edaakyil</groupId>
-    <artifactId>PasswordGeneratorServiceLib</artifactId>
+    <artifactId>PasswordGeneratorDataServiceLib</artifactId>
     <version>1.0.0</version>
-    <name>PasswordGeneratorServiceLib</name>
+    <name>PasswordGeneratorDataServiceLib</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
