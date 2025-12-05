@@ -38,7 +38,7 @@ public class CityRepositoryFindByIdTest {
     @Test
     public void givenValue_whenId_thenOptionalEmpty()
     {
-        var id = 1001L;
+        var id = 3000L;
 
         assertTrue(m_cityRepository.findById(id).isEmpty());
     }

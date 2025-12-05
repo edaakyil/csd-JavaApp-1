@@ -9,7 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.stream.StreamSupport;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -19,11 +19,13 @@ public class CityRepositoryFindByNameTest {
     private ICityRepository m_cityRepository;
 
     @Test
-    public void test()
+    public void givenValue_whenName_thenFound()
     {
-        var name = "Amiens";
+        var name = "Perm";
+        var expectedCount = 3L;
         var count = StreamSupport.stream(m_cityRepository.findByName(name).spliterator(), false).count();
 
-        assertTrue(count != 0);
+        //assertTrue(count != 0);
+        assertEquals(expectedCount, count);
     }
 }
