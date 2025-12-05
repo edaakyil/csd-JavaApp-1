@@ -27,3 +27,4 @@ create table if not exists flights (
 truncate table flights restart identity cascade;
 truncate table airports restart identity cascade;
 truncate table cities restart identity cascade;
+truncate table countries restart identity cascade;
