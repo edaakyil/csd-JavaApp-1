@@ -21,6 +21,7 @@ public class CityRepository implements ICityRepository {
     // Cümleleri üretme:
     private static final String FIND_ALL_SQL = "SELECT * FROM cities";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE city_id = :id";
+    private static final String FIND_BY_NAME_SQL = "SELECT * FROM cities WHERE name = :name";
     private static final String SAVE_SQL = "INSERT INTO cities (name, country_id) VALUES (:name, :countryId)";
 
     public CityRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
@@ -98,6 +99,19 @@ public class CityRepository implements ICityRepository {
 
         // Artık id'ye ilişkin veri varsa gelecek olan data'nın bir tane olduğuna eminiz
         return cities.isEmpty() ? Optional.empty() : Optional.of(cities.get(0));
+    }
+
+    @Override
+    public Iterable<City> findByName(String name)
+    {
+        var cities = new ArrayList<City>();
+        var paramMap = new HashMap<String, Object>();
+
+        paramMap.put("name", name);
+
+        m_namedParameterJdbcTemplate.query(FIND_BY_NAME_SQL, paramMap, rs -> { fillCities(cities, rs); });
+
+        return cities;
     }
 
     @Override
