@@ -20,7 +20,7 @@ public class CountryRepository implements ICountryRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
     private static final String FIND_ALL_SQL = "SELECT * FROM countries";
-    private static final String FIND_BY_ID_SQL = "SELECT * FROM countries WHERE id = :id";
+    private static final String FIND_BY_ID_SQL = "SELECT * FROM countries WHERE country_id = :id";
     private static final String SAVE_SQL = "INSERT INTO countries (name) VALUES (:name)";
 
     public CountryRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
