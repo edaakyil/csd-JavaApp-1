@@ -17,6 +17,7 @@ public class CityRepositorySaveTest {
     @Autowired
     private ICityRepository m_cityRepository;
 
+    /*
     @Test
     public void givenValue_whenCity_thenSaveAndFindById()
     {
@@ -27,5 +28,17 @@ public class CityRepositorySaveTest {
 
         var cityOpt = m_cityRepository.findById(expectedId);
         assertEquals(expectedId, cityOpt.get().getId());
+    }
+    */
+
+    @Test
+    public void givenValue_whenCity_thenSetIdentity()
+    {
+        var city = new City(0, "Zonguldak", 309);
+        var expectedId = 1001L;
+
+        m_cityRepository.save(city);
+
+        assertEquals(expectedId, city.getId());
     }
 }

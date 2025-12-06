@@ -5,13 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 @Lazy
@@ -137,8 +136,10 @@ public class CityRepository implements ICityRepository {
     public <S extends City> S save(S city)
     {
         var parameterSource = new BeanPropertySqlParameterSource(city);
+        var keyHolder = new GeneratedKeyHolder();
 
-        m_namedParameterJdbcTemplate.update(SAVE_SQL, parameterSource);
+        m_namedParameterJdbcTemplate.update(SAVE_SQL, parameterSource, keyHolder);
+        city.setId((long)keyHolder.getKeys().get("city_id"));
 
         return city;
     }
