@@ -70,6 +70,18 @@ public class AirportRepository implements IAirportRepository {
     }
 
     @Override
+    public Iterable<Airport> findByCityId(long cityId)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
+    public Iterable<Airport> findByNameContains(String text)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
     public Iterable<Airport> findAll()
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
