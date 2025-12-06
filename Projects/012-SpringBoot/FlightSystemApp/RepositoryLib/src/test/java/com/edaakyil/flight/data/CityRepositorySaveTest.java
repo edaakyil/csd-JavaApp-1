@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -27,7 +26,6 @@ public class CityRepositorySaveTest {
         m_cityRepository.save(city);
 
         var cityOpt = m_cityRepository.findById(expectedId);
-
         assertEquals(expectedId, cityOpt.get().getId());
     }
 }
