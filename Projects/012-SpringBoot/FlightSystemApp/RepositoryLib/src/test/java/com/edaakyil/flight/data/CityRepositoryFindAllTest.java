@@ -1,7 +1,7 @@
 package com.edaakyil.flight.data;
 
+import com.edaakyil.flight.data.constant.TestConstant;
 import com.edaakyil.flight.data.repository.ICityRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +12,7 @@ import java.util.stream.StreamSupport;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
-@Disabled
+@TestPropertySource(locations = TestConstant.UNITTEST_PROPS_FILE)
 public class CityRepositoryFindAllTest {
     @Autowired
     private ICityRepository m_cityRepository;
