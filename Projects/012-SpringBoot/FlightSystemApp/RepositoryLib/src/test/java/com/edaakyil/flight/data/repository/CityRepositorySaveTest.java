@@ -1,8 +1,7 @@
-package com.edaakyil.flight.data;
+package com.edaakyil.flight.data.repository;
 
 import com.edaakyil.flight.data.constant.TestConstant;
 import com.edaakyil.flight.data.entity.City;
-import com.edaakyil.flight.data.repository.ICityRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
