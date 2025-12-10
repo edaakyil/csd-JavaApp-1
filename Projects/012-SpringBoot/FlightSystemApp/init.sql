@@ -1,6 +1,6 @@
 create database db_japp1_flight;
 
-create table if not exists countries(
+create table if not exists countries (
 	country_id bigserial primary key,
 	name varchar(250)
 );
@@ -20,7 +20,7 @@ create table if not exists airports (
 	city_id bigint references cities(city_id) not null  -- foreign key oluşturduk
 );
 
-create table if not exists flights(
+create table if not exists flights (
 	flight_id varchar(20) primary key,
 	departure_airport_id bigint references airports(airport_id) not null,
 	destination_airport_id bigint references airports(airport_id) not null,

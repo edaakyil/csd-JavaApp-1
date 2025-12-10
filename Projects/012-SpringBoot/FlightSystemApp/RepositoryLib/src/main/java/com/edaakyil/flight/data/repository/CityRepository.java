@@ -18,6 +18,7 @@ import java.util.*;
 public class CityRepository implements ICityRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate; // Bunu biz yaratmıyoruz. Bu, arkaplanda yaratılıyor.
     // Cümleleri üretme:
+    private static final String DELETE_BY_ID_SQL = "DELETE FROM cities WHERE city_id = :id";
     private static final String FIND_ALL_SQL = "SELECT * FROM cities";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE city_id = :id";
     private static final String FIND_BY_NAME_SQL = "SELECT * FROM cities WHERE name = :name";
@@ -58,7 +59,13 @@ public class CityRepository implements ICityRepository {
     @Override
     public void deleteById(Long id)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        log.info("CityRepository.deleteByID -> city_id: {}", id);
+
+        var paramMap = new HashMap<String, Object>();
+
+        paramMap.put("id", id);
+
+        m_namedParameterJdbcTemplate.update(DELETE_BY_ID_SQL, paramMap);
     }
 
     @Override
@@ -88,6 +95,8 @@ public class CityRepository implements ICityRepository {
     @Override
     public Optional<City> findById(Long id)
     {
+        log.info("CityRepository.findById -> city_id: {}", id);
+
         var cities = new ArrayList<City>();
         var paramMap = new HashMap<String, Object>();
 
@@ -103,6 +112,8 @@ public class CityRepository implements ICityRepository {
     @Override
     public Iterable<City> findByName(String name)
     {
+        log.info("CityRepository.findByName -> name: {}", name);
+
         var cities = new ArrayList<City>();
         var paramMap = new HashMap<String, Object>();
 
@@ -116,6 +127,8 @@ public class CityRepository implements ICityRepository {
     @Override
     public Iterable<City> findAll()
     {
+        log.info("CityRepository.findAll");
+
         var cities = new ArrayList<City>();
 
         // cities'in içini doldurma:
@@ -135,6 +148,8 @@ public class CityRepository implements ICityRepository {
     @Override
     public <S extends City> S save(S city)
     {
+        log.info("CityRepository.save -> city: {}", city.toString());
+
         var parameterSource = new BeanPropertySqlParameterSource(city);
         var keyHolder = new GeneratedKeyHolder();
 

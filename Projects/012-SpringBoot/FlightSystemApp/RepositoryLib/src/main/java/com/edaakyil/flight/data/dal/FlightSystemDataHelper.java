@@ -39,6 +39,26 @@ public class FlightSystemDataHelper {
         m_airportRepository = airportRepository;
     }
 
+    public void deleteCountryById(long id)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    public void deleteCityById(long id)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    public Iterable<Country> findCountryByName(String name)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    public Iterable<City> findCityByName(String name)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
     public Optional<Country> findCountryById(long id)
     {
         try {

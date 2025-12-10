@@ -19,8 +19,10 @@ import java.util.Optional;
 public class CountryRepository implements ICountryRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
+    private static final String DELETE_BY_ID_SQL = "DELETE FROM countries WHERE country_id = :id";
     private static final String FIND_ALL_SQL = "SELECT * FROM countries";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM countries WHERE country_id = :id";
+    private static final String FIND_BY_NAME_SQL = "SELECT * FROM countries WHERE name = :name";
     private static final String SAVE_SQL = "INSERT INTO countries (name) VALUES (:name)";
 
     public CountryRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
@@ -53,7 +55,13 @@ public class CountryRepository implements ICountryRepository {
     @Override
     public void deleteById(Long id)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        log.info("CountryRepository.deleteByID -> country_id: {}", id);
+
+        var paramMap = new HashMap<String, Object>();
+
+        paramMap.put("id", id);
+
+        m_namedParameterJdbcTemplate.update(DELETE_BY_ID_SQL, paramMap);
     }
 
     @Override
@@ -83,6 +91,8 @@ public class CountryRepository implements ICountryRepository {
     @Override
     public Optional<Country> findById(Long id)
     {
+        log.info("CountryRepository.findById -> country_id: {}", id);
+
         var countries = new ArrayList<Country>();
         var paramMap = new HashMap<String, Object>();
 
@@ -94,8 +104,25 @@ public class CountryRepository implements ICountryRepository {
     }
 
     @Override
+    public Iterable<Country> findByName(String name)
+    {
+        log.info("CountryRepository.findByName -> name: {}", name);
+
+        var countries = new ArrayList<Country>();
+        var paramMap = new HashMap<String, Object>();
+
+        paramMap.put("name", name);
+
+        m_namedParameterJdbcTemplate.query(FIND_BY_NAME_SQL, paramMap, rs -> { fillCountries(countries, rs); });
+
+        return countries;
+    }
+
+    @Override
     public Iterable<Country> findAll()
     {
+        log.info("CountryRepository.findAll");
+
         var countries = new ArrayList<Country>();
 
         m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, rs -> { fillCountries(countries, rs); });
@@ -112,6 +139,8 @@ public class CountryRepository implements ICountryRepository {
     @Override
     public <S extends Country> S save(S country)
     {
+        log.info("CountryRepository.save -> city: {}", country.toString());
+
         var parameterSource = new BeanPropertySqlParameterSource(country);
 
         m_namedParameterJdbcTemplate.update(SAVE_SQL, parameterSource);
