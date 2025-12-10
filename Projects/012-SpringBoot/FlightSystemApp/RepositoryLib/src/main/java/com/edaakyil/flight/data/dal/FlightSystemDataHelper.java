@@ -13,14 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-/*
-* DAL katmanının avantajı (görevi):
-*   - exception handling yapıyor
-*   - Repository katmanındaki işleri bir üst katman olan Service katmanı için yumuşatması.
-*     Böylelikle Service katmanı, Repository katmanındaki interface'lerin hepsini enjekte etmek yerine bir tek bu
-*     helper sınıfını enjekte edip bu helper sınıfının ilgili metotlarını çağırıyor. (Bu facade tasarım kalıbıdır.)
-*/
-
 @Component
 @Lazy
 @Slf4j

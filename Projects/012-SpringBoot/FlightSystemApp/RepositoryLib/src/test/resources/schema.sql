@@ -29,128 +29,128 @@ truncate table airports restart identity cascade;
 truncate table cities restart identity cascade;
 truncate table countries restart identity cascade;
 
-DROP PROCEDURE IF EXISTS sp_delete_country_by_id;
+drop procedure if exists sp_delete_country_by_id;
 
-CREATE OR REPLACE PROCEDURE sp_delete_country_by_id(bigint)
-LANGUAGE plpgsql
-AS
+create or replace procedure sp_delete_country_by_id(bigint)
+language plpgsql
+as
 '
-    BEGIN
-        DELETE FROM countries WHERE country_id = $1;
-    END
+    begin
+        delete from countries where country_id = $1;
+    end
 ';
 
-DROP PROCEDURE IF EXISTS sp_delete_city_by_id;
+drop procedure if exists sp_delete_city_by_id;
 
-CREATE OR REPLACE PROCEDURE sp_delete_city_by_id(bigint)
-LANGUAGE plpgsql
-AS
+create or replace procedure sp_delete_city_by_id(bigint)
+language plpgsql
+as
 '
-    BEGIN
-        DELETE FROM cities WHERE city_id = $1;
-    END
+    begin
+        delete from cities where city_id = $1;
+    end
 ';
 
-DROP FUNCTION IF EXISTS find_country_by_id;
+drop function if exists find_country_by_id;
 
-CREATE OR REPLACE FUNCTION find_country_by_id(bigint)
-RETURNS TABLE (id bigint, country_name varchar(250))
-AS
+create or replace function find_country_by_id(bigint)
+returns table (id bigint, country_name varchar(250))
+as
 '
-    BEGIN
-        RETURN QUERY SELECT * FROM countries WHERE country_id = $1;
-        RETURN QUERY SELECT * FROM countries WHERE country_id = $1;
-    END
-' LANGUAGE plpgsql;
+    begin
+        return query select * from countries where country_id = $1;
+        return query select * from countries where country_id = $1;
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS find_city_by_id;
+drop function if exists find_city_by_id;
 
-CREATE OR REPLACE FUNCTION find_city_by_id(bigint)
-RETURNS TABLE (id bigint, city_name varchar(250), country_id bigint)
-AS
+create or replace function find_city_by_id(bigint)
+returns table (id bigint, city_name varchar(250), country_id bigint)
+as
 '
-    BEGIN
-        RETURN QUERY SELECT * FROM cities WHERE city_id = $1;
-    END
-' LANGUAGE plpgsql;
+    begin
+        return query select * from cities where city_id = $1;
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS find_country_by_name;
+drop function if exists find_country_by_name;
 
-CREATE OR REPLACE FUNCTION find_country_by_name(varchar(250))
-RETURNS TABLE (id bigint, country_name varchar(250))
-AS
+create or replace function find_country_by_name(varchar(250))
+returns table (id bigint, country_name varchar(250))
+as
 '
-    BEGIN
-        RETURN QUERY SELECT * FROM countries WHERE name = $1;
-    END
-' LANGUAGE plpgsql;
+    begin
+        return query select * from countries where name = $1;
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS find_city_by_name;
+drop function if exists find_city_by_name;
 
-CREATE OR REPLACE FUNCTION find_city_by_name(varchar(250))
-RETURNS TABLE (id bigint, city_name varchar(250), country_id bigint) -- table-valued function'a geri dönüyoruz
-AS
+create or replace function find_city_by_name(varchar(250))
+returns table (id bigint, city_name varchar(250), country_id bigint) -- table-valued function'a geri dönüyoruz
+as
 '
-    BEGIN
-        RETURN QUERY SELECT * FROM cities WHERE name = $1;
-    END
-' LANGUAGE plpgsql;  -- fonksiyonlarda language tag'ını buraya ekliyoruz
+    begin
+        return query select * from cities where name = $1;
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS find_all_countries;
+drop function if exists find_all_countries;
 
-CREATE OR REPLACE FUNCTION find_all_countries()
-RETURNS TABLE (id bigint, country_name varchar(250))
-AS
+create or replace function find_all_countries()
+returns table (id bigint, country_name varchar(250))
+as
 '
-    BEGIN
-        RETURN QUERY SELECT * FROM countries;
-    END
-' LANGUAGE plpgsql;
+    begin
+        return query select * from countries;
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS find_all_cities;
+drop function if exists find_all_cities;
 
-CREATE OR REPLACE FUNCTION find_all_cities()
-RETURNS TABLE (id bigint, city_name varchar(250), country_id bigint)
-AS
+create or replace function find_all_cities()
+returns table (id bigint, city_name varchar(250), country_id bigint)
+as
 '
-    BEGIN
-        RETURN QUERY SELECT * FROM cities;
-    END
-' LANGUAGE plpgsql;
+    begin
+        return query select * from cities;
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS insert_country;
+drop function if exists insert_country;
 
-CREATE OR REPLACE FUNCTION insert_country(varchar(250))
-RETURNS bigint
-AS
+create or replace function insert_country(varchar(250))
+returns bigint
+as
 '
-    BEGIN
-        INSERT INTO countries (name) VALUES ($1);
-    END
-' LANGUAGE plpgsql;
+    begin
+        insert into countries (name) values ($1);
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS insert_country;
+drop function if exists insert_country;
 
-CREATE OR REPLACE FUNCTION insert_country(varchar(250))
-RETURNS bigint
-AS
+create or replace function insert_country(varchar(250))
+returns bigint
+as
 '
-    BEGIN
-        INSERT INTO countries (name) VALUES ($1);
+    begin
+        insert into countries (name) values ($1);
 
-        RETURN CURRVAL($$countries_country_id_seq$$::regclass);
-    END
-' LANGUAGE plpgsql;
+        return currval($$countries_country_id_seq$$::regclass);
+    end
+' language plpgsql;
 
-DROP FUNCTION IF EXISTS insert_city;
+drop function if exists insert_city;
 
-CREATE OR REPLACE FUNCTION insert_city(varchar(250), bigint)
-RETURNS bigint
-AS
+create or replace function insert_city(varchar(250), bigint)
+returns bigint
+as
 '
-    BEGIN
-        INSERT INTO cities (name, country_id) VALUES ($1, $2);
+    begin
+        insert into cities (name, country_id) values ($1, $2);
 
-        RETURN CURRVAL($$cities_city_id_seq$$::regclass);
-    END
-' LANGUAGE plpgsql;
+        return currval($$cities_city_id_seq$$::regclass);
+    end
+' language plpgsql;
