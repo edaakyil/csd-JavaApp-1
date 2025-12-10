@@ -30,7 +30,6 @@ truncate table cities restart identity cascade;
 truncate table countries restart identity cascade;
 
 drop procedure if exists sp_delete_country_by_id;
-
 create or replace procedure sp_delete_country_by_id(bigint)
 language plpgsql
 as
@@ -41,7 +40,6 @@ as
 ';
 
 drop procedure if exists sp_delete_city_by_id;
-
 create or replace procedure sp_delete_city_by_id(bigint)
 language plpgsql
 as
@@ -52,7 +50,6 @@ as
 ';
 
 drop function if exists find_country_by_id;
-
 create or replace function find_country_by_id(bigint)
 returns table (id bigint, country_name varchar(250))
 as
@@ -64,7 +61,6 @@ as
 ' language plpgsql;
 
 drop function if exists find_city_by_id;
-
 create or replace function find_city_by_id(bigint)
 returns table (id bigint, city_name varchar(250), country_id bigint)
 as
@@ -75,7 +71,6 @@ as
 ' language plpgsql;
 
 drop function if exists find_country_by_name;
-
 create or replace function find_country_by_name(varchar(250))
 returns table (id bigint, country_name varchar(250))
 as
@@ -86,7 +81,6 @@ as
 ' language plpgsql;
 
 drop function if exists find_city_by_name;
-
 create or replace function find_city_by_name(varchar(250))
 returns table (id bigint, city_name varchar(250), country_id bigint) -- table-valued function'a geri dönüyoruz
 as
@@ -97,7 +91,6 @@ as
 ' language plpgsql;
 
 drop function if exists find_all_countries;
-
 create or replace function find_all_countries()
 returns table (id bigint, country_name varchar(250))
 as
@@ -108,7 +101,6 @@ as
 ' language plpgsql;
 
 drop function if exists find_all_cities;
-
 create or replace function find_all_cities()
 returns table (id bigint, city_name varchar(250), country_id bigint)
 as
@@ -119,7 +111,6 @@ as
 ' language plpgsql;
 
 drop function if exists insert_country;
-
 create or replace function insert_country(varchar(250))
 returns bigint
 as
@@ -130,7 +121,6 @@ as
 ' language plpgsql;
 
 drop function if exists insert_country;
-
 create or replace function insert_country(varchar(250))
 returns bigint
 as
@@ -143,7 +133,6 @@ as
 ' language plpgsql;
 
 drop function if exists insert_city;
-
 create or replace function insert_city(varchar(250), bigint)
 returns bigint
 as
