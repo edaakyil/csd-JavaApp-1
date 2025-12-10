@@ -46,12 +46,12 @@ public class FlightSystemDataService {
         throw new UnsupportedOperationException("Not implemented yet!...");
     }
 
-    public Optional<CountryDTO> findCountryByName(String name)
+    public Iterable<CountryDTO> findCountryByName(String name)
     {
         throw new UnsupportedOperationException("Not implemented yet!...");
     }
 
-    public Optional<CityDTO> findCityByName(String name)
+    public Iterable<CityDTO> findCityByName(String name)
     {
         throw new UnsupportedOperationException("Not implemented yet!...");
     }
