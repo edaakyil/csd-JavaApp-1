@@ -16,17 +16,14 @@ import java.util.*;
 @Lazy
 @Slf4j
 public class CityRepository implements ICityRepository {
-    private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate; // Bunu biz yaratmıyoruz. Bu, arkaplanda yaratılıyor.
+    private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
-    //private static final String DELETE_BY_ID_SQL = "DELETE FROM cities WHERE city_id = :id";
-    private static final String DELETE_BY_ID_SQL = "CALL sp_delete_city_by_id(:id)"; // procedure'lı hali
-    //private static final String FIND_ALL_SQL = "SELECT * FROM cities";
+    private static final String DELETE_BY_ID_SQL = "CALL sp_delete_city_by_id(:id)";
     private static final String FIND_ALL_SQL = "SELECT * FROM find_all_cities()";
-    //private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE city_id = :id";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM find_city_by_id(:id)";
-    //private static final String FIND_BY_NAME_SQL = "SELECT * FROM cities WHERE name = :name";
-    private static final String FIND_BY_NAME_SQL = "SELECT * FROM find_city_by_name(:name)";  // function'lı hali
-    private static final String SAVE_SQL = "INSERT INTO cities (name, country_id) VALUES (:name, :countryId)";
+    private static final String FIND_BY_NAME_SQL = "SELECT * FROM find_city_by_name(:name)";
+    //private static final String SAVE_SQL = "INSERT INTO cities (name, country_id) VALUES (:name, :countryId)";
+    private static final String SAVE_SQL = "SELECT * FROM insert_city(:name, :countryId)";  // sorgu cümlesi (query)
 
     public CityRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
@@ -154,11 +151,12 @@ public class CityRepository implements ICityRepository {
     {
         log.info("CityRepository.save -> city: {}", city.toString());
 
-        var parameterSource = new BeanPropertySqlParameterSource(city);
-        var keyHolder = new GeneratedKeyHolder();
+        var paramMap = new HashMap<String, Object>();
 
-        m_namedParameterJdbcTemplate.update(SAVE_SQL, parameterSource, keyHolder);
-        city.setId((long)keyHolder.getKeys().get("city_id"));
+        paramMap.put("name", city.getName());
+        paramMap.put("countryId", city.getCountryId());
+
+        m_namedParameterJdbcTemplate.query(SAVE_SQL, paramMap, (ResultSet rs) -> city.setId(rs.getLong(1)));
 
         return city;
     }

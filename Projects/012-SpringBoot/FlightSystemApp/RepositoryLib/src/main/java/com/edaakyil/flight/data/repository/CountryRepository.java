@@ -19,15 +19,12 @@ import java.util.Optional;
 public class CountryRepository implements ICountryRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
-    //private static final String DELETE_BY_ID_SQL = "DELETE FROM countries WHERE country_id = :id";
     private static final String DELETE_BY_ID_SQL = "CALL sp_delete_country_by_id(:id)";
-    //private static final String FIND_ALL_SQL = "SELECT * FROM countries";
     private static final String FIND_ALL_SQL = "SELECT * FROM find_all_countries()";
-    //private static final String FIND_BY_ID_SQL = "SELECT * FROM countries WHERE country_id = :id";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM find_country_by_id(:id)";
-    //private static final String FIND_BY_NAME_SQL = "SELECT * FROM countries WHERE name = :name";
     private static final String FIND_BY_NAME_SQL = "SELECT * FROM find_country_by_name(:name)";
-    private static final String SAVE_SQL = "INSERT INTO countries (name) VALUES (:name)";
+    //private static final String SAVE_SQL = "INSERT INTO countries (name) VALUES (:name)";
+    private static final String SAVE_SQL = "SELECT * FROM insert_country(:name)";
 
     public CountryRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
@@ -145,9 +142,11 @@ public class CountryRepository implements ICountryRepository {
     {
         log.info("CountryRepository.save -> city: {}", country.toString());
 
-        var parameterSource = new BeanPropertySqlParameterSource(country);
+        var paramMap = new HashMap<String, Object>();
 
-        m_namedParameterJdbcTemplate.update(SAVE_SQL, parameterSource);
+        paramMap.put("name", country.getName());
+
+        m_namedParameterJdbcTemplate.query(SAVE_SQL, paramMap, (ResultSet rs) -> country.setId(rs.getLong(1)));
 
         return country;
     }

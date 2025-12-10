@@ -117,3 +117,40 @@ AS
         RETURN QUERY SELECT * FROM cities;
     END
 ' LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS insert_country;
+
+CREATE OR REPLACE FUNCTION insert_country(varchar(250))
+RETURNS bigint
+AS
+'
+    BEGIN
+        INSERT INTO countries (name) VALUES ($1);
+    END
+' LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS insert_country;
+
+CREATE OR REPLACE FUNCTION insert_country(varchar(250))
+RETURNS bigint
+AS
+'
+    BEGIN
+        INSERT INTO countries (name) VALUES ($1);
+
+        RETURN CURRVAL($$countries_country_id_seq$$::regclass);
+    END
+' LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS insert_city;
+
+CREATE OR REPLACE FUNCTION insert_city(varchar(250), bigint)
+RETURNS bigint
+AS
+'
+    BEGIN
+        INSERT INTO cities (name, country_id) VALUES ($1, $2);
+
+        RETURN CURRVAL($$cities_city_id_seq$$::regclass);
+    END
+' LANGUAGE plpgsql;
