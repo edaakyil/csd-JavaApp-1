@@ -1,4 +1,4 @@
-package com.edaakyil.data.repository.exception;
+package com.edaakyil.java.lib.data.repository.exception;
 
 public class RepositoryException extends RuntimeException {
     public RepositoryException()

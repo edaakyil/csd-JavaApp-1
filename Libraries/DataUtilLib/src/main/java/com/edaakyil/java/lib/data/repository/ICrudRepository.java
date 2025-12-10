@@ -1,4 +1,4 @@
-package com.edaakyil.data.repository;
+package com.edaakyil.java.lib.data.repository;
 
 import java.util.Optional;
 
