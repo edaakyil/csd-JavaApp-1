@@ -22,8 +22,8 @@ public class CityRepository implements ICityRepository {
     private static final String DELETE_BY_ID_SQL = "CALL sp_delete_city_by_id(:id)"; // procedure'lı hali
     //private static final String FIND_ALL_SQL = "SELECT * FROM cities";
     private static final String FIND_ALL_SQL = "SELECT * FROM find_all_cities()";
-    private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE city_id = :id";
-    //private static final String FIND_BY_ID_SQL = "SELECT * FROM find_city_by_id(:id)";
+    //private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE city_id = :id";
+    private static final String FIND_BY_ID_SQL = "SELECT * FROM find_city_by_id(:id)";
     //private static final String FIND_BY_NAME_SQL = "SELECT * FROM cities WHERE name = :name";
     private static final String FIND_BY_NAME_SQL = "SELECT * FROM find_city_by_name(:name)";  // function'lı hali
     private static final String SAVE_SQL = "INSERT INTO cities (name, country_id) VALUES (:name, :countryId)";

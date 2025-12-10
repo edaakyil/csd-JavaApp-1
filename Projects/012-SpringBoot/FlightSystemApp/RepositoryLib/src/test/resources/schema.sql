@@ -66,7 +66,7 @@ AS
 DROP FUNCTION IF EXISTS find_city_by_id;
 
 CREATE OR REPLACE FUNCTION find_city_by_id(bigint)
-RETURNS TABLE (id bigint, city_name varchar(250))
+RETURNS TABLE (id bigint, city_name varchar(250), country_id bigint)
 AS
 '
     BEGIN
