@@ -18,7 +18,8 @@ import java.util.*;
 public class CityRepository implements ICityRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate; // Bunu biz yaratmıyoruz. Bu, arkaplanda yaratılıyor.
     // Cümleleri üretme:
-    private static final String DELETE_BY_ID_SQL = "DELETE FROM cities WHERE city_id = :id";
+    //private static final String DELETE_BY_ID_SQL = "DELETE FROM cities WHERE city_id = :id";
+    private static final String DELETE_BY_ID_SQL = "CALL sp_delete_city_by_id(:id)"; // procedure'lı hali
     private static final String FIND_ALL_SQL = "SELECT * FROM cities";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM cities WHERE city_id = :id";
     private static final String FIND_BY_NAME_SQL = "SELECT * FROM cities WHERE name = :name";

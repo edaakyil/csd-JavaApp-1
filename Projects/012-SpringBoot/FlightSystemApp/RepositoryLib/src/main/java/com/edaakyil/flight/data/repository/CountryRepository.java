@@ -19,7 +19,8 @@ import java.util.Optional;
 public class CountryRepository implements ICountryRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
-    private static final String DELETE_BY_ID_SQL = "DELETE FROM countries WHERE country_id = :id";
+    //private static final String DELETE_BY_ID_SQL = "DELETE FROM countries WHERE country_id = :id";
+    private static final String DELETE_BY_ID_SQL = "CALL sp_delete_country_by_id(:id)";
     private static final String FIND_ALL_SQL = "SELECT * FROM countries";
     private static final String FIND_BY_ID_SQL = "SELECT * FROM countries WHERE country_id = :id";
     private static final String FIND_BY_NAME_SQL = "SELECT * FROM countries WHERE name = :name";

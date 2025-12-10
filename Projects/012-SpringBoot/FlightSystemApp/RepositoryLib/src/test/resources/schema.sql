@@ -28,3 +28,25 @@ truncate table flights restart identity cascade;
 truncate table airports restart identity cascade;
 truncate table cities restart identity cascade;
 truncate table countries restart identity cascade;
+
+DROP PROCEDURE IF EXISTS sp_delete_country_by_id;
+
+CREATE OR REPLACE PROCEDURE sp_delete_country_by_id(bigint)
+LANGUAGE plpgsql
+AS
+'
+    BEGIN
+        DELETE FROM countries WHERE country_id = $1;
+    END
+';
+
+DROP PROCEDURE IF EXISTS sp_delete_city_by_id;
+
+CREATE OR REPLACE PROCEDURE sp_delete_city_by_id(bigint)
+LANGUAGE plpgsql
+AS
+'
+    BEGIN
+        DELETE FROM cities WHERE city_id = $1;
+    END
+';
