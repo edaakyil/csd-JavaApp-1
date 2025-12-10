@@ -3,6 +3,7 @@ package com.edaakyil.flight.data.service;
 import com.edaakyil.flight.data.dal.FlightSystemDataHelper;
 import com.edaakyil.flight.data.service.dto.CityDTO;
 import com.edaakyil.flight.data.service.dto.CitySaveDTO;
+import com.edaakyil.flight.data.service.dto.CountryDTO;
 import com.edaakyil.flight.data.service.dto.CountrySaveDTO;
 import com.edaakyil.flight.data.service.mapper.MapperInject;
 import com.edaakyil.java.lib.data.repository.exception.RepositoryException;
@@ -24,7 +25,17 @@ public class FlightSystemDataService {
         m_mapperInject = mapperInject;
     }
 
-    public Optional<CountrySaveDTO> findCountryById(long id)
+    public void deleteCountryById(long id)
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
+    }
+
+    public void deleteCityById(long id)
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
+    }
+
+    public Optional<CountryDTO> findCountryById(long id)
     {
         throw new UnsupportedOperationException("Not implemented yet!...");
     }
@@ -35,7 +46,17 @@ public class FlightSystemDataService {
         throw new UnsupportedOperationException("Not implemented yet!...");
     }
 
-    public Iterable<CountrySaveDTO> findAllCountries()
+    public Optional<CountryDTO> findCountryByName(String name)
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
+    }
+
+    public Optional<CityDTO> findCityByName(String name)
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
+    }
+
+    public Iterable<CountryDTO> findAllCountries()
     {
         throw new UnsupportedOperationException("Not implemented yet!...");
     }
