@@ -41,16 +41,6 @@ public class FlightSystemDataHelper {
         throw new  UnsupportedOperationException("Not yet implemented!...");
     }
 
-    public Iterable<Country> findCountryByName(String name)
-    {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
-    }
-
-    public Iterable<City> findCityByName(String name)
-    {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
-    }
-
     public Optional<Country> findCountryById(long id)
     {
         try {
@@ -79,6 +69,16 @@ public class FlightSystemDataHelper {
 
             throw new RepositoryException("FlightSystemDataHelper.findCityById", ex);
         }
+    }
+
+    public Iterable<Country> findCountryByName(String name)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    public Iterable<City> findCityByName(String name)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
     }
 
     public Iterable<Country> findAllCountries()
@@ -139,5 +139,15 @@ public class FlightSystemDataHelper {
 
             throw new RepositoryException("FlightSystemDataHelper.saveCity", ex);
         }
+    }
+
+    public Country updateCountry(Country country)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    public City updateCity(City city)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
     }
 }

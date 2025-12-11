@@ -1,10 +1,7 @@
 package com.edaakyil.flight.data.service;
 
 import com.edaakyil.flight.data.dal.FlightSystemDataHelper;
-import com.edaakyil.flight.data.service.dto.CityDTO;
-import com.edaakyil.flight.data.service.dto.CitySaveDTO;
-import com.edaakyil.flight.data.service.dto.CountryDTO;
-import com.edaakyil.flight.data.service.dto.CountrySaveDTO;
+import com.edaakyil.flight.data.service.dto.*;
 import com.edaakyil.flight.data.service.mapper.MapperInject;
 import com.edaakyil.java.lib.data.repository.exception.RepositoryException;
 import com.edaakyil.java.lib.data.service.exception.DataServiceException;
@@ -110,5 +107,15 @@ public class FlightSystemDataService {
 
             throw new DataServiceException("FlightSystemDataService.saveCity -> Any Exception", ex);
         }
+    }
+
+    public CountryUpdateDTO updateCountry(CountryUpdateDTO countryUpdateDTO)
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
+    }
+
+    public CityUpdateDTO updateCity(CityUpdateDTO cityUpdateDTO)
+    {
+        throw new UnsupportedOperationException("Not implemented yet!...");
     }
 }
