@@ -5,4 +5,5 @@ import com.edaakyil.java.lib.data.repository.ICrudRepository;
 
 public interface ICityRepository extends ICrudRepository<City, Long> {
     Iterable<City> findByName(String name);
+    City updateCity(City city);
 }

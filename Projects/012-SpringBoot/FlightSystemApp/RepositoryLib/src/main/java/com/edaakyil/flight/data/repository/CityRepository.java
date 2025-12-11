@@ -20,7 +20,8 @@ public class CityRepository implements ICityRepository {
     private static final String FIND_ALL_SQL = "select * from find_all_cities()";
     private static final String FIND_BY_ID_SQL = "select * from find_city_by_id(:id)";
     private static final String FIND_BY_NAME_SQL = "select * from find_city_by_name(:name)";
-    private static final String SAVE_SQL = "select * from insert_city(:name, :country_id)";
+    private static final String SAVE_SQL = "select * from insert_city(:name, :countryId)";
+    private static final String UPDATE_SQL = "call sp_update_city(:id, :name, :countryId)";
 
     public CityRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
@@ -29,16 +30,8 @@ public class CityRepository implements ICityRepository {
 
     private void fillCities(ArrayList<City> cities, ResultSet rs) throws SQLException
     {
-        // ResultSet'i dolaşma:
         do {
-            // Buradan data'ları alırız:
-
-            // JDBC'nin tasarımında index numaraları 1'den başlar 0'dan değil. Bu yüzden getLong() metodunun argümanını 1'den başlattık
-            // getLong() metoduna argüman olarak index verdiğimizde bu index tabloyu oluştururkenki alanların bildirim sırasına karşılık gelir
             cities.add(new City(rs.getLong(1), rs.getString(2), rs.getLong(3)));
-            // getLong() metodunun "city_id" argümanı veritabanındaki kolunun birebir aynı ismidir
-            //cities.add(new City(rs.getLong("city_id"), rs.getString("name"), rs.getLong("country_id")));  // daha yavaş
-
         } while (rs.next());
     }
 
@@ -101,9 +94,7 @@ public class CityRepository implements ICityRepository {
         paramMap.put("id", id);
 
         m_namedParameterJdbcTemplate.query(FIND_BY_ID_SQL, paramMap, rs -> { fillCities(cities, rs); });
-        //m_namedParameterJdbcTemplate.query(FIND_BY_ID_SQL, paramMap, (ResultSet rs) -> fillCities(cities, rs)); // it is also OK
 
-        // Artık id'ye ilişkin veri varsa gelecek olan data'nın bir tane olduğuna eminiz
         return cities.isEmpty() ? Optional.empty() : Optional.of(cities.get(0));
     }
 
@@ -129,10 +120,7 @@ public class CityRepository implements ICityRepository {
 
         var cities = new ArrayList<City>();
 
-        // cities'in içini doldurma:
-        //m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, rs -> fillCities(cities, rs)); // Ambiguity error
         m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, (ResultSet rs) -> fillCities(cities, rs));
-        //m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, rs -> { fillCities(cities, rs); });  // it is also OK
 
         return cities;
     }
@@ -150,7 +138,7 @@ public class CityRepository implements ICityRepository {
 
         var paramMap = new HashMap<String, Object>();
         paramMap.put("name", city.getName());
-        paramMap.put("country_id", city.getCountryId());
+        paramMap.put("countryId", city.getCountryId());
 
         m_namedParameterJdbcTemplate.query(SAVE_SQL, paramMap, (ResultSet rs) -> city.setId(rs.getLong(1)));
 
@@ -159,6 +147,12 @@ public class CityRepository implements ICityRepository {
 
     @Override
     public <S extends City> Iterable<S> saveAll(Iterable<S> cities)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
+    public City updateCity(City city)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
     }

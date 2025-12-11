@@ -23,6 +23,7 @@ public class CountryRepository implements ICountryRepository {
     private static final String FIND_BY_ID_SQL = "select * from find_country_by_id(:id)";
     private static final String FIND_BY_NAME_SQL = "select * from find_country_by_name(:name)";
     private static final String SAVE_SQL = "select * from insert_country(:name)";
+    private static final String UPDATE_SQL = "call sp_update_country(:id, :name)";
 
     public CountryRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
@@ -32,10 +33,7 @@ public class CountryRepository implements ICountryRepository {
     private void fillCountries(ArrayList<Country> countries, ResultSet rs) throws SQLException
     {
         do
-            // tablonun alan isimlerinin kullanılmasının avantajıları daha algılanabilir olmasıdır ve alanların bildirim sırasının bilinmesinin gerek olmamasıdır.
-            // index kullanmanın bir avantajı hızlı işlem yapmaktır.
-            countries.add(new Country(rs.getLong(1), rs.getString(2))); // index kullanmanın bir avantajı hızlı işlem yapmaktır.
-            //countries.add(new Country(rs.getLong("country_id"), rs.getString("name"))); // daha yavaş.
+            countries.add(new Country(rs.getLong(1), rs.getString(2)));
         while (rs.next());
     }
 
@@ -150,6 +148,12 @@ public class CountryRepository implements ICountryRepository {
 
     @Override
     public <S extends Country> Iterable<S> saveAll(Iterable<S> countries)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
+    public Country updateCountry(Country country)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
     }

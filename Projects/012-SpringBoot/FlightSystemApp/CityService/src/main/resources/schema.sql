@@ -29,16 +29,6 @@ truncate table airports restart identity cascade;
 truncate table cities restart identity cascade;
 truncate table countries restart identity cascade;
 
-drop procedure if exists sp_delete_country_by_id;
-create or replace procedure sp_delete_country_by_id(bigint)
-language plpgsql
-as
-'
-    begin
-        delete from countries where country_id = $1;
-    end
-';
-
 drop procedure if exists sp_delete_city_by_id;
 create or replace procedure sp_delete_city_by_id(bigint)
 language plpgsql
@@ -49,16 +39,15 @@ as
     end
 ';
 
-drop function if exists find_country_by_id;
-create or replace function find_country_by_id(bigint)
-returns table (id bigint, country_name varchar(250))
+drop procedure if exists sp_update_city;
+create or replace procedure sp_update_city(bigint, varchar(250), bigint)
+language plpgsql
 as
 '
     begin
-        return query select * from countries where country_id = $1;
-        return query select * from countries where country_id = $1;
+        update cities set name = $2, country_id = $3 where city_id = $1;
     end
-' language plpgsql;
+';
 
 drop function if exists find_city_by_id;
 create or replace function find_city_by_id(bigint)
@@ -67,16 +56,6 @@ as
 '
     begin
         return query select * from cities where city_id = $1;
-    end
-' language plpgsql;
-
-drop function if exists find_country_by_name;
-create or replace function find_country_by_name(varchar(250))
-returns table (id bigint, country_name varchar(250))
-as
-'
-    begin
-        return query select * from countries where name = $1;
     end
 ' language plpgsql;
 
@@ -90,16 +69,6 @@ as
     end
 ' language plpgsql;
 
-drop function if exists find_all_countries;
-create or replace function find_all_countries()
-returns table (id bigint, country_name varchar(250))
-as
-'
-    begin
-        return query select * from countries;
-    end
-' language plpgsql;
-
 drop function if exists find_all_cities;
 create or replace function find_all_cities()
 returns table (id bigint, city_name varchar(250), country_id bigint)
@@ -107,28 +76,6 @@ as
 '
     begin
         return query select * from cities;
-    end
-' language plpgsql;
-
-drop function if exists insert_country;
-create or replace function insert_country(varchar(250))
-returns bigint
-as
-'
-    begin
-        insert into countries (name) values ($1);
-    end
-' language plpgsql;
-
-drop function if exists insert_country;
-create or replace function insert_country(varchar(250))
-returns bigint
-as
-'
-    begin
-        insert into countries (name) values ($1);
-
-        return currval($$countries_country_id_seq$$::regclass);
     end
 ' language plpgsql;
 
