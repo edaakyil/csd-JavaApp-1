@@ -20,7 +20,7 @@ public class CityRepository implements ICityRepository {
     private static final String FIND_ALL_SQL = "select * from find_all_cities()";
     private static final String FIND_BY_ID_SQL = "select * from find_city_by_id(:id)";
     private static final String FIND_BY_NAME_SQL = "select * from find_city_by_name(:name)";
-    private static final String SAVE_SQL = "select * from insert_city(:name, :countryId)"; 
+    private static final String SAVE_SQL = "select * from insert_city(:name, :country_id)";
 
     public CityRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
@@ -150,7 +150,7 @@ public class CityRepository implements ICityRepository {
 
         var paramMap = new HashMap<String, Object>();
         paramMap.put("name", city.getName());
-        paramMap.put("countryId", city.getCountryId());
+        paramMap.put("country_id", city.getCountryId());
 
         m_namedParameterJdbcTemplate.query(SAVE_SQL, paramMap, (ResultSet rs) -> city.setId(rs.getLong(1)));
 
