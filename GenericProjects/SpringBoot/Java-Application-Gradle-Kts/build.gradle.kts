@@ -18,6 +18,8 @@ repositories {
 	mavenLocal()
 	maven {
 		url = uri("https://raw.github.com/oguzkaran/javaapp1-nov-2023-maven-repo/main")
+	}
+	maven {
 		url = uri("https://raw.github.com/oguzkaran/javaapp1-nov-2023-karandev-maven-repo/main")
 	}
 }
