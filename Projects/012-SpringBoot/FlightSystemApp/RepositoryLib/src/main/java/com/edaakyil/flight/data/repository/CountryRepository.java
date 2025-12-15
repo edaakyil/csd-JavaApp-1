@@ -55,7 +55,6 @@ public class CountryRepository implements ICountryRepository {
         log.info("CountryRepository.deleteByID -> country_id: {}", id);
 
         var paramMap = new HashMap<String, Object>();
-
         paramMap.put("id", id);
 
         m_namedParameterJdbcTemplate.update(DELETE_BY_ID_SQL, paramMap);
@@ -90,11 +89,10 @@ public class CountryRepository implements ICountryRepository {
     {
         log.info("CountryRepository.findById -> country_id: {}", id);
 
-        var countries = new ArrayList<Country>();
         var paramMap = new HashMap<String, Object>();
-
         paramMap.put("id", id);
 
+        var countries = new ArrayList<Country>();
         m_namedParameterJdbcTemplate.query(FIND_BY_ID_SQL, paramMap, (ResultSet rs) -> fillCountries(countries, rs));
 
         return countries.isEmpty() ? Optional.empty() : Optional.of(countries.get(0));
@@ -105,11 +103,10 @@ public class CountryRepository implements ICountryRepository {
     {
         log.info("CountryRepository.findByName -> name: {}", name);
 
-        var countries = new ArrayList<Country>();
         var paramMap = new HashMap<String, Object>();
-
         paramMap.put("name", name);
 
+        var countries = new ArrayList<Country>();
         m_namedParameterJdbcTemplate.query(FIND_BY_NAME_SQL, paramMap, rs -> { fillCountries(countries, rs); });
 
         return countries;
@@ -121,7 +118,6 @@ public class CountryRepository implements ICountryRepository {
         log.info("CountryRepository.findAll");
 
         var countries = new ArrayList<Country>();
-
         m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, rs -> { fillCountries(countries, rs); });
 
         return countries;
@@ -136,7 +132,7 @@ public class CountryRepository implements ICountryRepository {
     @Override
     public <S extends Country> S save(S country)
     {
-        log.info("CountryRepository.save -> city: {}", country.toString());
+        log.info("CountryRepository.save -> Country: {}", country.toString());
 
         var paramMap = new HashMap<String, Object>();
         paramMap.put("name", country.getName());

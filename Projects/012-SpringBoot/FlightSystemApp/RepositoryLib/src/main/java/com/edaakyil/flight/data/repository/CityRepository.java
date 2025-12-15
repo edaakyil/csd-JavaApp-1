@@ -53,7 +53,6 @@ public class CityRepository implements ICityRepository {
         log.info("CityRepository.deleteByID -> city_id: {}", id);
 
         var paramMap = new HashMap<String, Object>();
-
         paramMap.put("id", id);
 
         m_namedParameterJdbcTemplate.update(DELETE_BY_ID_SQL, paramMap);
@@ -88,11 +87,10 @@ public class CityRepository implements ICityRepository {
     {
         log.info("CityRepository.findById -> city_id: {}", id);
 
-        var cities = new ArrayList<City>();
         var paramMap = new HashMap<String, Object>();
-
         paramMap.put("id", id);
 
+        var cities = new ArrayList<City>();
         m_namedParameterJdbcTemplate.query(FIND_BY_ID_SQL, paramMap, rs -> { fillCities(cities, rs); });
 
         return cities.isEmpty() ? Optional.empty() : Optional.of(cities.get(0));
@@ -103,11 +101,10 @@ public class CityRepository implements ICityRepository {
     {
         log.info("CityRepository.findByName -> name: {}", name);
 
-        var cities = new ArrayList<City>();
         var paramMap = new HashMap<String, Object>();
-
         paramMap.put("name", name);
 
+        var cities = new ArrayList<City>();
         m_namedParameterJdbcTemplate.query(FIND_BY_NAME_SQL, paramMap, rs -> { fillCities(cities, rs); });
 
         return cities;
@@ -119,7 +116,6 @@ public class CityRepository implements ICityRepository {
         log.info("CityRepository.findAll");
 
         var cities = new ArrayList<City>();
-
         m_namedParameterJdbcTemplate.query(FIND_ALL_SQL, (ResultSet rs) -> fillCities(cities, rs));
 
         return cities;
@@ -134,7 +130,7 @@ public class CityRepository implements ICityRepository {
     @Override
     public <S extends City> S save(S city)
     {
-        log.info("CityRepository.save -> city: {}", city.toString());
+        log.info("CityRepository.save -> City: {}", city.toString());
 
         var paramMap = new HashMap<String, Object>();
         paramMap.put("name", city.getName());

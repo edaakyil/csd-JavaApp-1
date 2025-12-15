@@ -3,9 +3,15 @@ package com.edaakyil.flight.data.repository;
 import com.edaakyil.flight.data.entity.Airport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
@@ -14,11 +20,24 @@ import java.util.Optional;
 public class AirportRepository implements IAirportRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
-    private static final String SAVE_SQL = "insert into airports (name, city_id) values (:name, :cityId)";
+    private static final String SAVE_SQL = "insert into airports (name, city_id, open_date) values (:name, :cityId, :openDate)";
 
     public AirportRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
         m_namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    private static void fillAirports(ArrayList<Airport> airports, ResultSet rs) throws SQLException
+    {
+        do {
+            var id = rs.getLong(1);
+            var name = rs.getString(2);
+            var cityId = rs.getLong(3);
+            var openDate = rs.getDate(4).toLocalDate();
+            var registerDateTime = rs.getTimestamp(5).toLocalDateTime();
+
+            airports.add(new Airport(id, name, cityId, openDate, registerDateTime));
+        } while (rs.next());
     }
 
     @Override
@@ -28,7 +47,7 @@ public class AirportRepository implements IAirportRepository {
     }
 
     @Override
-    public void delete(Airport aiport)
+    public void delete(Airport airport)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
     }
@@ -46,7 +65,7 @@ public class AirportRepository implements IAirportRepository {
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Airport> aiports)
+    public void deleteAll(Iterable<? extends Airport> airports)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
     }
@@ -94,13 +113,24 @@ public class AirportRepository implements IAirportRepository {
     }
 
     @Override
-    public <S extends Airport> S save(S aiport)
+    public <S extends Airport> S save(S airport)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        log.info("AirportRepository.save -> Airport: {}", airport.toString());
+
+        var paramSource = new BeanPropertySqlParameterSource(airport);
+        paramSource.registerSqlType("openTime", Types.DATE);
+        paramSource.registerSqlType("registerDateTime", Types.TIMESTAMP);
+
+        var keyHolder = new GeneratedKeyHolder();
+        m_namedParameterJdbcTemplate.update(SAVE_SQL, paramSource, keyHolder);
+
+        airport.setId((long)keyHolder.getKeys().get("airport_id"));
+
+        return airport;
     }
 
     @Override
-    public <S extends Airport> Iterable<S> saveAll(Iterable<S> aiports)
+    public <S extends Airport> Iterable<S> saveAll(Iterable<S> airports)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
     }

@@ -3,6 +3,9 @@ package com.edaakyil.flight.data.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -17,4 +20,10 @@ public class Airport {
 
     @Accessors(prefix = "m_")
     private long m_cityId;
+
+    @Accessors(prefix = "m_")
+    private LocalDate m_openDate;
+
+    @Accessors(prefix = "m_")
+    private LocalDateTime m_registerDateTime;
 }
