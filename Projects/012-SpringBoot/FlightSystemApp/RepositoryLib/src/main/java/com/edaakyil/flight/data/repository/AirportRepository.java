@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Repository
@@ -21,6 +22,7 @@ public class AirportRepository implements IAirportRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
     // Cümleleri üretme:
     private static final String SAVE_SQL = "insert into airports (name, city_id, open_date) values (:name, :cityId, :openDate)";
+    private static final String FIND_BY_NAME_CONTAINS_SQL = "select * from airports where name like :pattern";
 
     public AirportRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
@@ -97,7 +99,15 @@ public class AirportRepository implements IAirportRepository {
     @Override
     public Iterable<Airport> findByNameContains(String text)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        log.info("AirportRepository.findByNameContains -> text: {}", text);
+
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("pattern", String.format("%%%s%%", text));
+
+        var airports = new ArrayList<Airport>();
+        m_namedParameterJdbcTemplate.query(FIND_BY_NAME_CONTAINS_SQL, paramMap, (ResultSet rs) -> fillAirports(airports, rs));
+
+        return airports;
     }
 
     @Override
