@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 /**
  * Dışarıya vereceğimiz ana dto budur.
  */
-public class GeonamesEarthQuakeDetails {
+public class GeonamesEarthQuakeDetail {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public String earthquakeId;
     @JsonInclude(JsonInclude.Include.NON_NULL)

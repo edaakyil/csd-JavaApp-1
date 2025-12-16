@@ -12,7 +12,7 @@ public interface IGeonamesMapper {
     @Mapping(source = "geonamesAddress.postalcode", target = "postalCode")
     @Mapping(source = "geonamesCountryCode.distance", target = "distance")
     @Mapping(source = "geonamesCountryCode.countryCode", target = "countryCode")
-    GeonamesEarthQuakeDetails toGeonamesEarthQuakeDetails(
+    GeonamesEarthQuakeDetail toGeonamesEarthQuakeDetail(
             GeonamesEarthQuake geonamesEarthQuake, GeonamesAddress geonamesAddress, GeonamesCountryCode geonamesCountryCode
     );
 }

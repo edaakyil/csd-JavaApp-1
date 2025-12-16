@@ -1,6 +1,6 @@
 package com.edaakyil.java.app.service.earthquake.controller;
 
-import com.edaakyil.java.app.service.earthquake.geonames.dto.GeonamesEarthQuakeInfoDetails;
+import com.edaakyil.java.app.service.earthquake.geonames.dto.GeonamesEarthQuakeDetailInfo;
 import com.edaakyil.java.app.service.earthquake.geonames.service.GeonamesEarthquakeService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class EarthquakeController {
     }
 
     @GetMapping("/json")
-    public GeonamesEarthQuakeInfoDetails findEarthquakesJSON(@RequestParam double north, @RequestParam double south,
+    public GeonamesEarthQuakeDetailInfo findEarthquakesJSON(@RequestParam double north, @RequestParam double south,
                                                              @RequestParam double east, @RequestParam double west)
     {
         return m_earthquakeService.findEarthquakesDetails(north, south, east, west);
@@ -31,3 +31,4 @@ public class EarthquakeController {
 // curl "http://localhost:6767/api/earthquakes/json?north=22.0&south=8.62&east=38.41&west=21.94"  --> Eritrea
 // curl "http://localhost:6767/api/earthquakes/json?north=49.04&south=46.43&east=16.98&west=9.48"  --> Austria
 // curl "http://localhost:6767/api/earthquakes/json?north=53.51&south=50.75&east=7.23&west=3.36"  --> Hollanda
+// curl "http://localhost:6767/api/earthquakes/json?north=49.5&south=25&east=-66.96&west=-125"  --> US
