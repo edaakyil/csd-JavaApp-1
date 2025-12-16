@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestTemplateConfig {
     @Bean
-    @Scope("prototype")
+     @Scope("prototype")
     public RestTemplate createRestTemplate()
     {
         return new RestTemplate();
