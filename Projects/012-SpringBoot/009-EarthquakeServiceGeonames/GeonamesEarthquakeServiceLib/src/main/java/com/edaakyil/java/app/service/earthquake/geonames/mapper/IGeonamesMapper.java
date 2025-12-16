@@ -6,13 +6,13 @@ import org.mapstruct.Mapping;
 
 @Mapper(implementationName = "GeonamesMapperImpl", componentModel = "spring")
 public interface IGeonamesMapper {
-    @Mapping(source = "geonamesEarthQuake.lat", target = "latitude")
-    @Mapping(source = "geonamesEarthQuake.lng", target = "longitude")
-    @Mapping(source = "geonamesEarthQuake.eqid", target = "earthquakeId")
-    @Mapping(source = "geonamesAddress.postalcode", target = "postalCode")
-    @Mapping(source = "geonamesCountryCode.distance", target = "distance")
-    @Mapping(source = "geonamesCountryCode.countryCode", target = "countryCode")
-    GeonamesEarthQuakeDetail toGeonamesEarthQuakeDetail(
-            GeonamesEarthQuake geonamesEarthQuake, GeonamesAddress geonamesAddress, GeonamesCountryCode geonamesCountryCode
-    );
+    @Mapping(source = "postalcode", target = "postalCode")
+    AddressInfo toAddressInfo(GeonamesAddress geonamesAddress);
+
+    CountryInfo toCountryInfo(GeonamesCountryCode geonamesCountryCode);
+
+    @Mapping(source = "lat", target = "latitude")
+    @Mapping(source = "lng", target = "longitude")
+    @Mapping(source = "eqid", target = "earthquakeId")
+    EarthquakeInfo toEarthquakeInfo(GeonamesEarthQuake geonamesEarthQuake);
 }

@@ -53,30 +53,41 @@ public class GeonamesEarthquakeService {
         return Objects.requireNonNull(m_restTemplate.getForObject(url, GeonamesAddressInfo.class)).address;
     }
 
-    private void earthquakeDetailInfoCallback(GeonamesEarthQuake geonamesEarthQuake, List<GeonamesEarthQuakeDetail> details)
+    private GeonamesEarthQuakeDetails toGeonamesEarthQuakeDetails(
+            GeonamesEarthQuake geonamesEarthQuake, GeonamesAddress geonamesAddress, GeonamesCountryCode geonamesCountryCode
+    )
+    {
+        var details = new GeonamesEarthQuakeDetails();
+        details.address = m_mapper.toAddressInfo(geonamesAddress);
+        details.country = m_mapper.toCountryInfo(geonamesCountryCode);
+        details.earthquake = m_mapper.toEarthquakeInfo(geonamesEarthQuake);
+
+        return details;
+    }
+
+    private void earthquakeDetailsInfoCallback(GeonamesEarthQuake geonamesEarthQuake, List<GeonamesEarthQuakeDetails> details)
     {
         var address = findAddress(geonamesEarthQuake.lat, geonamesEarthQuake.lng);
         var countryCode = findCountryCode(geonamesEarthQuake.lat, geonamesEarthQuake.lng);
 
-        details.add(m_mapper.toGeonamesEarthQuakeDetail(geonamesEarthQuake, address, countryCode));
+        details.add(toGeonamesEarthQuakeDetails(geonamesEarthQuake, address, countryCode));
     }
 
-    private GeonamesEarthQuakeDetailInfo toGeonamesEarthQuakeDetailInfo(GeonamesEarthQuakeInfo geonamesEarthQuakeInfo)
+    private GeonamesEarthQuakeDetailsInfo toGeonamesEarthQuakeDetailsInfo(GeonamesEarthQuakeInfo geonamesEarthQuakeInfo)
     {
-        var detailInfo = new GeonamesEarthQuakeDetailInfo();
+        var detailsInfo = new GeonamesEarthQuakeDetailsInfo();
+        detailsInfo.earthquakes = new ArrayList<>();
 
-        detailInfo.earthquakes = new ArrayList<>();
+        geonamesEarthQuakeInfo.earthquakes.forEach(e -> earthquakeDetailsInfoCallback(e, detailsInfo.earthquakes));
 
-        geonamesEarthQuakeInfo.earthquakes.forEach(e -> earthquakeDetailInfoCallback(e, detailInfo.earthquakes));
-
-        return detailInfo;
+        return detailsInfo;
     }
 
     // Dışarıya vereceğimiz metot (bizim ana metodumuz bu olacak):
-    public GeonamesEarthQuakeDetailInfo findEarthquakesDetails(double north, double south, double east, double west)
+    public GeonamesEarthQuakeDetailsInfo findEarthquakesDetailsInfo(double north, double south, double east, double west)
     {
         var earthquakeInfo = findEarthquakes(north, south, east, west);
 
-        return toGeonamesEarthQuakeDetailInfo(earthquakeInfo);
+        return toGeonamesEarthQuakeDetailsInfo(earthquakeInfo);
     }
 }

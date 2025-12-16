@@ -1,6 +1,6 @@
 package com.edaakyil.java.app.service.earthquake.controller;
 
-import com.edaakyil.java.app.service.earthquake.geonames.dto.GeonamesEarthQuakeDetailInfo;
+import com.edaakyil.java.app.service.earthquake.geonames.dto.GeonamesEarthQuakeDetailsInfo;
 import com.edaakyil.java.app.service.earthquake.geonames.service.GeonamesEarthquakeService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +20,10 @@ public class EarthquakeController {
     }
 
     @GetMapping("/json")
-    public GeonamesEarthQuakeDetailInfo findEarthquakesJSON(@RequestParam double north, @RequestParam double south,
+    public GeonamesEarthQuakeDetailsInfo findEarthquakesJSON(@RequestParam double north, @RequestParam double south,
                                                              @RequestParam double east, @RequestParam double west)
     {
-        return m_earthquakeService.findEarthquakesDetails(north, south, east, west);
+        return m_earthquakeService.findEarthquakesDetailsInfo(north, south, east, west);
     }
 }
 
