@@ -16,6 +16,7 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     private static final String FIND_DETAILS_BY_REGION_INFO_SQL = SqlClauseConstants.FIND_DETAILS_BY_REGION_INFO_SQL;
     private static final String SAVE_REGION_INFO_SQL = SqlClauseConstants.SAVE_REGION_INFO_SQL;
     private static final String SAVE_EARTHQUAKE_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_INFO_SQL;
+    private static final String SAVE_EARTHQUAKE_QUERY_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_QUERY_INFO_SQL;
     private static final String SAVE_EARTHQUAKE_COUNTRY_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_COUNTRY_INFO_SQL;
     private static final String SAVE_EARTHQUAKE_ADDRESS_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_ADDRESS_INFO_SQL;
 

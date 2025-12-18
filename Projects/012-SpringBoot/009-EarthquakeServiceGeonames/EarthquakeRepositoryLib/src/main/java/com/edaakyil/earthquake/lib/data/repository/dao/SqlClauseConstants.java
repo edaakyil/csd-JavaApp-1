@@ -26,6 +26,8 @@ final class SqlClauseConstants {
             (:region_info_id, :date_time, :depth, :latitude, :longitude, :earthquake_id, :magnitude)
             """;
 
+    static final String SAVE_EARTHQUAKE_QUERY_INFO_SQL = "insert into earthquake_query_info (region_info_id) values (:region_info_id)";
+
     static final String SAVE_EARTHQUAKE_COUNTRY_INFO_SQL = """
             insert into earthquake_country_info
             (region_info_id, distance, language, country_code, country_name)

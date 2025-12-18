@@ -1,6 +1,7 @@
 drop table if exists earthquake_address_info;
 drop table if exists earthquake_country_info;
 drop table if exists earthquake_info;
+drop table if exists earthquake_query_info;
 drop table if exists region_info;
 
 create table region_info (
@@ -38,4 +39,10 @@ create table earthquake_address_info (
 	locality varchar(250),
 	street varchar(250),
 	postal_code varchar(250)
+);
+
+create table earthquake_query_info (
+	earthquake_query_info_id bigserial primary key,
+	region_info_id bigint references region_info(region_info_id) not null,
+	query_date_time timestamp default(current_timestamp) not null
 );
