@@ -1,14 +1,18 @@
 package com.edaakyil.earthquake.lib.data.repository.dao;
 
-import com.edaakyil.earthquake.lib.data.repository.entity.EarthquakeDetails;
-import com.edaakyil.earthquake.lib.data.repository.entity.EarthquakeSave;
-import com.edaakyil.earthquake.lib.data.repository.entity.RegionInfo;
+import com.edaakyil.earthquake.lib.data.repository.entity.*;
+import com.edaakyil.java.lib.data.repository.exception.RepositoryException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class RegionInfoRepository implements IRegionInfoRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
@@ -23,6 +27,37 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     public RegionInfoRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
         m_namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    // id'yi dönüyor
+    private long saveRegionInfo(RegionInfo regionInfo) throws SQLException
+    {
+        log.info("RegionInfoRepository.saveRegionInfo -> RegionInfo: {}", regionInfo.toString());
+
+        var paramSource = new BeanPropertySqlParameterSource(regionInfo);
+        var keyHolder = new GeneratedKeyHolder();
+
+        // NamedParameterJdbcTemplate sınıfının update metodu kaç tane data'nın update edildiği bilgisini veren
+        // int türden bir değere geri dönüyor.
+        if (m_namedParameterJdbcTemplate.update(SAVE_REGION_INFO_SQL, paramSource, keyHolder) != 1)
+            throw new SQLException();
+
+        return (long) keyHolder.getKeyList().get(0).get("region_info_id");
+    }
+
+    private void saveEarthquakeInfo(EarthquakeInfo earthquakeInfo)
+    {
+
+    }
+
+    private void setEarthquakeCountryInfo(EarthquakeCountryInfo earthquakeCountryInfo)
+    {
+
+    }
+
+    private void saveEarthquakeAddressInfo(EarthquakeAddressInfo earthquakeAddressInfo)
+    {
+
     }
 
     @Override
@@ -99,9 +134,21 @@ public class RegionInfoRepository implements IRegionInfoRepository {
 
     @Override
     @Transactional
-    public boolean saveRegionInfo(EarthquakeSave earthquakeSave)
+    public void saveEarthquake(EarthquakeSave earthquakeSave)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        try {
+            long regionInfoId = saveRegionInfo(earthquakeSave.regionInfo);
+            saveEarthquakeInfo(earthquakeSave.earthquakeInfo);
+            setEarthquakeCountryInfo(earthquakeSave.earthquakeCountryInfo);
+            saveEarthquakeAddressInfo(earthquakeSave.earthquakeAddressInfo);
+
+            log.info("Generated regionInfoId: {}", regionInfoId);
+
+        } catch (SQLException ex) {
+            log.error("RegionInfoRepository.saveEarthquake -> RepositoryException Message: {}", ex.getMessage());
+
+            throw new RepositoryException("RegionInfoRepository.saveEarthquake -> RepositoryException", ex);
+        }
     }
 
     @Override

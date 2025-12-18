@@ -1,7 +1,9 @@
 package com.edaakyil.earthquake.lib.data.repository.entity;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
+@ToString
 @EqualsAndHashCode
 public class EarthquakeInfo {
     public long id;
