@@ -137,12 +137,12 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     public void saveEarthquake(EarthquakeSave earthquakeSave)
     {
         try {
-            long regionInfoId = saveRegionInfo(earthquakeSave.regionInfo);
+            long countOfGeneratedRegionInfo = saveRegionInfo(earthquakeSave.regionInfo);
             saveEarthquakeInfo(earthquakeSave.earthquakeInfo);
             setEarthquakeCountryInfo(earthquakeSave.earthquakeCountryInfo);
             saveEarthquakeAddressInfo(earthquakeSave.earthquakeAddressInfo);
 
-            log.info("Generated regionInfoId: {}", regionInfoId);
+            log.info("Generated RegionInfo counts: {}", countOfGeneratedRegionInfo);
 
         } catch (SQLException ex) {
             log.error("RegionInfoRepository.saveEarthquake -> RepositoryException Message: {}", ex.getMessage());
