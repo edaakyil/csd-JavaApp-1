@@ -4,7 +4,6 @@ import com.edaakyil.earthquake.lib.data.repository.dao.IRegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.dao.RegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.entity.EarthquakeSave;
 import com.edaakyil.earthquake.lib.data.repository.entity.RegionInfo;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,7 +22,7 @@ public class SaveEarthquakeTest {
     private IRegionInfoRepository m_regionInfoRepository;
 
     @Test
-    public void test() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException
+    public void givenValue_whenEarthquake_thenSaveRegionInfo_generated_id_true() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException
     {
         var earthquake = new EarthquakeSave();
         earthquake.regionInfo = new RegionInfo();
