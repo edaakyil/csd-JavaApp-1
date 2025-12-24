@@ -20,20 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-unittest.properties")
 public class SaveEarthquakeTest {
-    private Method m_method;
-
     @Autowired
     private IRegionInfoRepository m_regionInfoRepository;
 
-    @BeforeEach
-    public void setUp() throws NoSuchMethodException
-    {
-        m_method = RegionInfoRepository.class.getDeclaredMethod("saveRegionInfo", RegionInfo.class);
-        m_method.setAccessible(true);
-    }
-
     @Test
-    public void test() throws InvocationTargetException, IllegalAccessException
+    public void test() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException
     {
         var earthquake = new EarthquakeSave();
         earthquake.regionInfo = new RegionInfo();
@@ -42,9 +33,11 @@ public class SaveEarthquakeTest {
         earthquake.regionInfo.north = 49.5;
         earthquake.regionInfo.south = 25;
 
+        var method = RegionInfoRepository.class.getDeclaredMethod("saveRegionInfo", RegionInfo.class);
+
         // invoke metodunda, earthquake.regionInfo ile m_regionInfoRepository'nin save metodunu çağırılacak
         // invoke metodunda, m_regionInfoRepository referansıyla earthquake'in regionInfo'suyla çağır diyoruz
-        var result = (long) m_method.invoke(m_regionInfoRepository, earthquake.regionInfo);
+        var result = (long) method.invoke(m_regionInfoRepository, earthquake.regionInfo);
 
         assertEquals(1L, result);
     }
