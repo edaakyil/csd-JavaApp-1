@@ -56,10 +56,16 @@ public class SaveEarthquakeTest {
         earthquake.earthquakeInfo.longitude = 40.67;
         earthquake.earthquakeInfo.magnitude = 7.6;
 
-        // earthquake_country_info ve earthquake_address_info tablolarının alanları nullable olduğu
-        // için bu nesneleri bu şekilde de başlatabiliriz.
         earthquake.earthquakeCountryInfo = new EarthquakeCountryInfo();
+        earthquake.earthquakeCountryInfo.countryCode = "AT";
+        earthquake.earthquakeCountryInfo.countryName = "Austria";
+        earthquake.earthquakeCountryInfo.languages = "de-AT,hr,hu,sl";
+        earthquake.earthquakeCountryInfo.distance = "0";
+
         earthquake.earthquakeAddressInfo = new EarthquakeAddressInfo();
+        earthquake.earthquakeAddressInfo.locality = "Amsterdam";
+        earthquake.earthquakeAddressInfo.postalCode = "1071 CX";
+        earthquake.earthquakeAddressInfo.street = "Paulus Potterstraat";
 
         // assertDoesNotThrow -> hiçbir şey fırlatmayacak anlamına gelir
         assertDoesNotThrow(() -> m_regionInfoRepository.saveEarthquake(earthquake));
