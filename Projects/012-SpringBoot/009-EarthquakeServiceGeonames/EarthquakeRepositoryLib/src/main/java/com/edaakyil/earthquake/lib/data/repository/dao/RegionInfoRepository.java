@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Slf4j
@@ -17,6 +20,7 @@ import java.util.Optional;
 public class RegionInfoRepository implements IRegionInfoRepository {
     private final NamedParameterJdbcTemplate m_namedParameterJdbcTemplate;
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final String FIND_DETAILS_BY_REGION_INFO_SQL = SqlClauseConstants.FIND_DETAILS_BY_REGION_INFO_SQL;
     private static final String SAVE_REGION_INFO_SQL = SqlClauseConstants.SAVE_REGION_INFO_SQL;
     private static final String SAVE_EARTHQUAKE_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_INFO_SQL;
@@ -47,17 +51,40 @@ public class RegionInfoRepository implements IRegionInfoRepository {
 
     private void saveEarthquakeInfo(EarthquakeInfo earthquakeInfo)
     {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("region_info_id", earthquakeInfo.regionInfoId);
+        paramMap.put("depth", earthquakeInfo.depth);
+        paramMap.put("latitude", earthquakeInfo.latitude);
+        paramMap.put("longitude", earthquakeInfo.longitude);
+        paramMap.put("earthquake_id", earthquakeInfo.earthquakeId);
+        paramMap.put("magnitude", earthquakeInfo.magnitude);
+        paramMap.put("date_time", LocalDateTime.parse(earthquakeInfo.dateTime, FORMATTER));
+        //paramMap.put("date_time", LocalDateTime.parse(earthquakeInfo.dateTime, DateTimeFormatter.ISO_DATE_TIME));
 
+        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_INFO_SQL, paramMap);
     }
 
     private void setEarthquakeCountryInfo(EarthquakeCountryInfo earthquakeCountryInfo)
     {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("region_info_id", earthquakeCountryInfo.regionInfoId);
+        paramMap.put("distance", earthquakeCountryInfo.distance);
+        paramMap.put("languages", earthquakeCountryInfo.languages);
+        paramMap.put("country_code", earthquakeCountryInfo.countryCode);
+        paramMap.put("country_name", earthquakeCountryInfo.countryName);
 
+        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_COUNTRY_INFO_SQL, paramMap);
     }
 
     private void saveEarthquakeAddressInfo(EarthquakeAddressInfo earthquakeAddressInfo)
     {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("region_info_id", earthquakeAddressInfo.regionInfoId);
+        paramMap.put("locality", earthquakeAddressInfo.locality);
+        paramMap.put("street", earthquakeAddressInfo.street);
+        paramMap.put("postal_code", earthquakeAddressInfo.postalCode);
 
+        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_ADDRESS_INFO_SQL, paramMap);
     }
 
     @Override
@@ -137,12 +164,17 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     public void saveEarthquake(EarthquakeSave earthquakeSave)
     {
         try {
-            long countOfGeneratedRegionInfo = saveRegionInfo(earthquakeSave.regionInfo);
+            var regionInfoId = saveRegionInfo(earthquakeSave.regionInfo);
+
+            log.info("Generated RegionInfo id: {}", regionInfoId);
+
+            earthquakeSave.earthquakeInfo.regionInfoId = regionInfoId;
+            earthquakeSave.earthquakeAddressInfo.regionInfoId = regionInfoId;
+            earthquakeSave.earthquakeCountryInfo.regionInfoId = regionInfoId;
+
             saveEarthquakeInfo(earthquakeSave.earthquakeInfo);
             setEarthquakeCountryInfo(earthquakeSave.earthquakeCountryInfo);
             saveEarthquakeAddressInfo(earthquakeSave.earthquakeAddressInfo);
-
-            log.info("Generated RegionInfo counts: {}", countOfGeneratedRegionInfo);
 
         } catch (SQLException ex) {
             log.error("RegionInfoRepository.saveEarthquake -> RepositoryException Message: {}", ex.getMessage());

@@ -30,9 +30,9 @@ final class SqlClauseConstants {
 
     static final String SAVE_EARTHQUAKE_COUNTRY_INFO_SQL = """
             insert into earthquake_country_info
-            (region_info_id, distance, language, country_code, country_name)
+            (region_info_id, distance, languages, country_code, country_name)
             values
-            (:region_info_id, :distance, :language, :country_code, :country_name)
+            (:region_info_id, :distance, :languages, :country_code, :country_name)
             """;
 
     static final String SAVE_EARTHQUAKE_ADDRESS_INFO_SQL = """

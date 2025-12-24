@@ -28,7 +28,7 @@ create table earthquake_country_info (
 	earthquake_country_info_id bigserial primary key,
 	region_info_id bigint references region_info(region_info_id) not null,
 	distance varchar(250),
-	language varchar(250),
+	languages varchar(250),
 	country_code varchar(20),
 	country_name varchar(250)
 );
