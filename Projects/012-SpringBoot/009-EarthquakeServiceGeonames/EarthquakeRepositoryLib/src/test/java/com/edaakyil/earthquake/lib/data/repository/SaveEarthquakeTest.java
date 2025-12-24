@@ -1,5 +1,6 @@
 package com.edaakyil.earthquake.lib.data.repository;
 
+import com.edaakyil.earthquake.lib.data.repository.dao.IRegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.dao.RegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.entity.EarthquakeSave;
 import com.edaakyil.earthquake.lib.data.repository.entity.RegionInfo;
@@ -22,7 +23,7 @@ public class SaveEarthquakeTest {
     private Method m_method;
 
     @Autowired
-    private RegionInfoRepository m_regionInfoRepository;
+    private IRegionInfoRepository m_regionInfoRepository;
 
     @BeforeEach
     public void setUp() throws NoSuchMethodException
