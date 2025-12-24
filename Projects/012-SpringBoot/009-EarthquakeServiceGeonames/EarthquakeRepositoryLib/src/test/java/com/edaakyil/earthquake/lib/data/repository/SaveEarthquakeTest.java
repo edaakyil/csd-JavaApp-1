@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-unittest.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestClassOrder(ClassOrderer.OrderAnnotation.class)
-@Order(0)
 public class SaveEarthquakeTest {
     @Autowired
     private IRegionInfoRepository m_regionInfoRepository;
