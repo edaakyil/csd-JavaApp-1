@@ -30,7 +30,7 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     }
 
     // id'yi dönüyor
-    private long saveRegionInfo(RegionInfo regionInfo) throws SQLException
+    public long saveRegionInfo(RegionInfo regionInfo) throws SQLException
     {
         log.info("RegionInfoRepository.saveRegionInfo -> RegionInfo: {}", regionInfo.toString());
 
