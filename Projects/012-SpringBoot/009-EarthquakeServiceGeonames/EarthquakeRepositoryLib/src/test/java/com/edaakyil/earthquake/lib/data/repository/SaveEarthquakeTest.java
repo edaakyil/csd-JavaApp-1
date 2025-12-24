@@ -13,7 +13,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,7 +36,7 @@ public class SaveEarthquakeTest {
     }
 
     @Test
-    public void test() throws SQLException, InvocationTargetException, IllegalAccessException
+    public void test() throws InvocationTargetException, IllegalAccessException
     {
         var earthquake = new EarthquakeSave();
         earthquake.regionInfo = new RegionInfo();
@@ -46,7 +45,9 @@ public class SaveEarthquakeTest {
         earthquake.regionInfo.north = 49.5;
         earthquake.regionInfo.south = 25;
 
-        var result = m_method.invoke(m_regionInfoRepository, earthquake.regionInfo);
+        // invoke metodunda, earthquake.regionInfo ile m_regionInfoRepository'nin save metodunu çağırılacak
+        // invoke metodunda, m_regionInfoRepository referansıyla earthquake'in regionInfo'suyla çağır diyoruz
+        var result = (long) m_method.invoke(m_regionInfoRepository, earthquake.regionInfo);
 
         assertEquals(1L, result);
     }
