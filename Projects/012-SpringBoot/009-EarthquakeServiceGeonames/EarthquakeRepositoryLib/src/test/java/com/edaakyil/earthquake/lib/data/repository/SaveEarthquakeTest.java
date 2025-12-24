@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestPropertySource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,18 +20,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestPropertySource(locations = "classpath:application-unittest.properties")
 public class SaveEarthquakeTest {
     private Method m_method;
-    private RegionInfoRepository m_regionInfoRepository;
 
     @Autowired
-    private ApplicationContext m_applicationContext;
+    private RegionInfoRepository m_regionInfoRepository;
 
     @BeforeEach
     public void setUp() throws NoSuchMethodException
     {
         m_method = RegionInfoRepository.class.getDeclaredMethod("saveRegionInfo", RegionInfo.class);
         m_method.setAccessible(true);
-
-        m_regionInfoRepository = m_applicationContext.getBean(RegionInfoRepository.class);
     }
 
     @Test
