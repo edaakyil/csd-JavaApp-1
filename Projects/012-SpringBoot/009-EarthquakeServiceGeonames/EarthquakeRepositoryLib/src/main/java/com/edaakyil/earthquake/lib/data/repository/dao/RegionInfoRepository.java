@@ -87,14 +87,6 @@ public class RegionInfoRepository implements IRegionInfoRepository {
         m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_ADDRESS_INFO_SQL, paramMap);
     }
 
-    private void saveEarthquakeQueryInfo(long regionInfoId)
-    {
-        var paramMap = new HashMap<String, Object>();
-        paramMap.put("region_info_id", regionInfoId);
-
-        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_QUERY_INFO_SQL, paramMap);
-    }
-
     @Override
     public long count()
     {
@@ -165,6 +157,15 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     public <S extends RegionInfo> Iterable<S> saveAll(Iterable<S> regionInfos)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
+    public void saveEarthquakeQueryInfo(long regionInfoId)
+    {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("region_info_id", regionInfoId);
+
+        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_QUERY_INFO_SQL, paramMap);
     }
 
     @Override
