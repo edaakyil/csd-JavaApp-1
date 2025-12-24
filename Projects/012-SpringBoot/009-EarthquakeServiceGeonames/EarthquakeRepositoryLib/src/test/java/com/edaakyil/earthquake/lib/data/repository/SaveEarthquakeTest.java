@@ -1,7 +1,6 @@
 package com.edaakyil.earthquake.lib.data.repository;
 
 import com.edaakyil.earthquake.lib.data.repository.dao.IRegionInfoRepository;
-import com.edaakyil.earthquake.lib.data.repository.dao.RegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.entity.EarthquakeSave;
 import com.edaakyil.earthquake.lib.data.repository.entity.RegionInfo;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ public class SaveEarthquakeTest {
         earthquake.regionInfo.north = 49.5;
         earthquake.regionInfo.south = 25;
 
-        var method = RegionInfoRepository.class.getDeclaredMethod("saveRegionInfo", RegionInfo.class);
+        var method = m_regionInfoRepository.getClass().getDeclaredMethod("saveRegionInfo", RegionInfo.class);
 
         // invoke metodunda, earthquake.regionInfo ile m_regionInfoRepository'nin save metodunu çağırılacak
         // invoke metodunda, m_regionInfoRepository referansıyla earthquake'in regionInfo'suyla çağır diyoruz
