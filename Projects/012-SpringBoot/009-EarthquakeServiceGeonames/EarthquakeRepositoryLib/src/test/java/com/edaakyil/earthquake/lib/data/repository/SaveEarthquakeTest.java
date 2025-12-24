@@ -2,7 +2,10 @@ package com.edaakyil.earthquake.lib.data.repository;
 
 import com.edaakyil.earthquake.lib.data.repository.dao.IRegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.entity.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootApplication
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-unittest.properties")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SaveEarthquakeTest {
     @Autowired
     private IRegionInfoRepository m_regionInfoRepository;
 
     @Test
+    @Order(0)
     public void givenValue_whenEarthquake_thenSaveRegionInfo_generated_id_true() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException
     {
         var earthquake = new EarthquakeSave();
@@ -35,10 +40,11 @@ public class SaveEarthquakeTest {
         // invoke metodunda, m_regionInfoRepository referansıyla earthquake'in regionInfo'suyla çağır diyoruz
         var result = (long) method.invoke(m_regionInfoRepository, earthquake.regionInfo);
 
-        assertEquals(2, result);
+        assertEquals(1, result);
     }
 
     @Test
+    @Order(1)
     public void givenValue_whenEarthquake_thenSaveNotThrowsSQLException()
     {
         var earthquake = new EarthquakeSave();

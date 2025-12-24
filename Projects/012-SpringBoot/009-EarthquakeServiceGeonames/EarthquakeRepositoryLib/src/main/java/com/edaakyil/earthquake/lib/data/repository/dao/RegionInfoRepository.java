@@ -87,6 +87,14 @@ public class RegionInfoRepository implements IRegionInfoRepository {
         m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_ADDRESS_INFO_SQL, paramMap);
     }
 
+    private void saveEarthquakeQueryInfo(long regionInfoId)
+    {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("region_info_id", regionInfoId);
+
+        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_QUERY_INFO_SQL, paramMap);
+    }
+
     @Override
     public long count()
     {
@@ -175,6 +183,7 @@ public class RegionInfoRepository implements IRegionInfoRepository {
             saveEarthquakeInfo(earthquakeSave.earthquakeInfo);
             saveEarthquakeCountryInfo(earthquakeSave.earthquakeCountryInfo);
             saveEarthquakeAddressInfo(earthquakeSave.earthquakeAddressInfo);
+            saveEarthquakeQueryInfo(regionInfoId);
 
         } catch (SQLException ex) {
             log.error("RegionInfoRepository.saveEarthquake -> RepositoryException Message: {}", ex.getMessage());
