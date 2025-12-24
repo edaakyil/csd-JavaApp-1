@@ -2,7 +2,10 @@ package com.edaakyil.earthquake.lib.data.repository;
 
 import com.edaakyil.earthquake.lib.data.repository.dao.IRegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.entity.*;
+import org.junit.jupiter.api.ClassOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @SpringBootApplication
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-unittest.properties")
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(1)
 public class SaveEarthquakeQueryInfoTest {
     @Autowired
     private IRegionInfoRepository m_regionInfoRepository;
