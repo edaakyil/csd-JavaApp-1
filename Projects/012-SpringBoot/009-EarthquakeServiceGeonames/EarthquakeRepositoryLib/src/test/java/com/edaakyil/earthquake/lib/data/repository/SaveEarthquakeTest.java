@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestPropertySource;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,19 +21,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-unittest.properties")
 public class SaveEarthquakeTest {
+    private Method m_method;
     private RegionInfoRepository m_regionInfoRepository;
 
     @Autowired
     private ApplicationContext m_applicationContext;
 
     @BeforeEach
-    public void setUp()
+    public void setUp() throws NoSuchMethodException
     {
+        m_method = RegionInfoRepository.class.getDeclaredMethod("saveRegionInfo", RegionInfo.class);
+        m_method.setAccessible(true);
+
         m_regionInfoRepository = m_applicationContext.getBean(RegionInfoRepository.class);
     }
 
     @Test
-    public void test() throws SQLException
+    public void test() throws SQLException, InvocationTargetException, IllegalAccessException
     {
         var earthquake = new EarthquakeSave();
         earthquake.regionInfo = new RegionInfo();
@@ -40,7 +46,7 @@ public class SaveEarthquakeTest {
         earthquake.regionInfo.north = 49.5;
         earthquake.regionInfo.south = 25;
 
-        var result = m_regionInfoRepository.saveRegionInfo(earthquake.regionInfo);
+        var result = m_method.invoke(m_regionInfoRepository, earthquake.regionInfo);
 
         assertEquals(1L, result);
     }
