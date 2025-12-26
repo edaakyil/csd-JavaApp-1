@@ -9,10 +9,13 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -31,6 +34,38 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     public RegionInfoRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
         m_namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    private EarthquakeInfo createEarthquakeInfo(String eqId, LocalDateTime dateTime, double lat, double lng, double depth, double magnitude)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    private EarthquakeCountryInfo createEarthquakeCountryInfo(String language, String distance, String countryCode, String countryName)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    private EarthquakeAddressInfo createEarthquakeAddressInfo(String locality, String postalCode, String street)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    private EarthquakeDetails createEarthquakeDetails(EarthquakeInfo quake, EarthquakeCountryInfo country, EarthquakeAddressInfo address)
+    {
+        var details = new EarthquakeDetails();
+        details.earthquakeInfo = quake;
+        details.earthquakeCountryInfo = country;
+        details.earthquakeAddressInfo = address;
+
+        return details;
+    }
+
+    private void fillEarthquakeDetails(ResultSet rs, List<EarthquakeDetails> list) throws SQLException
+    {
+        do {
+
+        } while (rs.next());
     }
 
     // id'yi dönüyor
@@ -130,12 +165,6 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     }
 
     @Override
-    public Optional<RegionInfo> findById(Long id)
-    {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
-    }
-
-    @Override
     public Iterable<RegionInfo> findAll()
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
@@ -145,6 +174,27 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     public Iterable<RegionInfo> findAllById(Iterable<Long> ids)
     {
         throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
+    public Optional<RegionInfo> findById(Long id)
+    {
+        throw new  UnsupportedOperationException("Not yet implemented!...");
+    }
+
+    @Override
+    public Iterable<EarthquakeDetails> findByRegionInfo(double east, double west, double north, double south)
+    {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("east", east);
+        paramMap.put("west", west);
+        paramMap.put("north", north);
+        paramMap.put("south", south);
+
+        var earthquakes = new ArrayList<EarthquakeDetails>();
+        m_namedParameterJdbcTemplate.query(FIND_DETAILS_BY_REGION_INFO_SQL, paramMap, (ResultSet rs) -> fillEarthquakeDetails(rs, earthquakes));
+
+        return earthquakes;
     }
 
     @Override
@@ -191,11 +241,5 @@ public class RegionInfoRepository implements IRegionInfoRepository {
 
             throw new RepositoryException("RegionInfoRepository.saveEarthquake -> RepositoryException", ex);
         }
-    }
-
-    @Override
-    public Iterable<EarthquakeDetails> findByRegionInfo(double east, double west, double north, double south)
-    {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
     }
 }

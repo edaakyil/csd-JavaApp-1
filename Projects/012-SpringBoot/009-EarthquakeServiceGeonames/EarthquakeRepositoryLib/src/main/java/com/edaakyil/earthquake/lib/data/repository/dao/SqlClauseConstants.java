@@ -7,7 +7,7 @@ final class SqlClauseConstants {
 
     static final String FIND_DETAILS_BY_REGION_INFO_SQL = """
             select
-            ei.earthquake_id, ei.latitude, ei.longitude, ei."depth", ei.date_time, ei.magnitude,
+            ei.earthquake_id, ei.date_time, ei.latitude, ei.longitude, ei."depth", ei.magnitude,
             eci."language", eci.distance, eci.country_code, eci.country_name,
             eai.locality, eai.postal_code, eai.street
             from region_info ri
