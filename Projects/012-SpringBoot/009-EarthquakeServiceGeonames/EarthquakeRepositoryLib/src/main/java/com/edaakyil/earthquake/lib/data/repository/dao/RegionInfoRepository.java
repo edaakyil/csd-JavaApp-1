@@ -31,40 +31,59 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     private static final String SAVE_EARTHQUAKE_COUNTRY_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_COUNTRY_INFO_SQL;
     private static final String SAVE_EARTHQUAKE_ADDRESS_INFO_SQL = SqlClauseConstants.SAVE_EARTHQUAKE_ADDRESS_INFO_SQL;
 
-    public RegionInfoRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
+    public  RegionInfoRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate)
     {
         m_namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    private EarthquakeInfo createEarthquakeInfo(String eqId, LocalDateTime dateTime, double lat, double lng, double depth, double magnitude)
+    private EarthquakeInfo createEarthquakeInfo(String eqId, String dateTime, double lat, double lng, double depth, double magnitude)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        return EarthquakeInfo.builder()
+                .earthquakeId(eqId)
+                .dateTime(dateTime)
+                .latitude(lat)
+                .longitude(lng)
+                .depth(depth)
+                .magnitude(magnitude)
+                .build();
     }
 
-    private EarthquakeCountryInfo createEarthquakeCountryInfo(String language, String distance, String countryCode, String countryName)
+    private EarthquakeCountryInfo createEarthquakeCountryInfo(String languages, String distance, String countryCode, String countryName)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        return EarthquakeCountryInfo.builder()
+                .countryCode(countryCode)
+                .countryName(countryName)
+                .distance(distance)
+                .languages(languages)
+                .build();
     }
 
     private EarthquakeAddressInfo createEarthquakeAddressInfo(String locality, String postalCode, String street)
     {
-        throw new  UnsupportedOperationException("Not yet implemented!...");
+        return EarthquakeAddressInfo.builder()
+                .street(street)
+                .locality(locality)
+                .postalCode(postalCode)
+                .build();
     }
 
     private EarthquakeDetails createEarthquakeDetails(EarthquakeInfo quake, EarthquakeCountryInfo country, EarthquakeAddressInfo address)
     {
-        var details = new EarthquakeDetails();
-        details.earthquakeInfo = quake;
-        details.earthquakeCountryInfo = country;
-        details.earthquakeAddressInfo = address;
-
-        return details;
+        return EarthquakeDetails.builder()
+                .earthquakeInfo(quake)
+                .earthquakeCountryInfo(country)
+                .earthquakeAddressInfo(address)
+                .build();
     }
 
     private void fillEarthquakeDetails(ResultSet rs, List<EarthquakeDetails> list) throws SQLException
     {
         do {
+            var quake = createEarthquakeInfo(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5), rs.getDouble(6));
+            var country = createEarthquakeCountryInfo(rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
+            var address = createEarthquakeAddressInfo(rs.getString(11), rs.getString(12), rs.getString(13));
 
+            list.add(createEarthquakeDetails(quake, country, address));
         } while (rs.next());
     }
 

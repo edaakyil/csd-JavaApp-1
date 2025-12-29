@@ -1,8 +1,10 @@
 package com.edaakyil.earthquake.lib.data.repository.entity;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+@Builder
 @ToString
 @EqualsAndHashCode
 public class EarthquakeCountryInfo {

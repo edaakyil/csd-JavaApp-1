@@ -23,11 +23,13 @@ public class SaveEarthquakeTest {
     public void givenValue_whenEarthquake_thenSaveRegionInfo_generated_id_true() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException
     {
         var earthquake = new EarthquakeSave();
-        earthquake.regionInfo = new RegionInfo();
-        earthquake.regionInfo.east = -66.96;
-        earthquake.regionInfo.west = -125;
-        earthquake.regionInfo.north = 49.5;
-        earthquake.regionInfo.south = 25;
+
+        earthquake.regionInfo = RegionInfo.builder()
+                .east(-66.96)
+                .west(-125)
+                .north(49.5)
+                .south(25)
+                .build();
 
         var method = m_regionInfoRepository.getClass().getDeclaredMethod("saveRegionInfo", RegionInfo.class);
 
@@ -43,30 +45,35 @@ public class SaveEarthquakeTest {
     public void givenValue_whenEarthquake_thenSaveNotThrowsSQLException()
     {
         var earthquake = new EarthquakeSave();
-        earthquake.regionInfo = new RegionInfo();
-        earthquake.regionInfo.east = -66.96;
-        earthquake.regionInfo.west = -125;
-        earthquake.regionInfo.north = 49.5;
-        earthquake.regionInfo.south = 25;
 
-        earthquake.earthquakeInfo = new EarthquakeInfo();
-        earthquake.earthquakeInfo.earthquakeId = "Test Earthquake";
-        earthquake.earthquakeInfo.dateTime = "2023-02-06 04:00:00";
-        earthquake.earthquakeInfo.depth = 100;
-        earthquake.earthquakeInfo.latitude = 45.67;
-        earthquake.earthquakeInfo.longitude = 40.67;
-        earthquake.earthquakeInfo.magnitude = 7.6;
+        earthquake.regionInfo = RegionInfo.builder()
+                .east(-66.96)
+                .west(-125)
+                .north(49.5)
+                .south(25)
+                .build();
 
-        earthquake.earthquakeCountryInfo = new EarthquakeCountryInfo();
-        earthquake.earthquakeCountryInfo.countryCode = "AT";
-        earthquake.earthquakeCountryInfo.countryName = "Austria";
-        earthquake.earthquakeCountryInfo.languages = "de-AT,hr,hu,sl";
-        earthquake.earthquakeCountryInfo.distance = "0";
+        earthquake.earthquakeInfo = EarthquakeInfo.builder()
+                .earthquakeId("Test Earthquake")
+                .dateTime("2023-02-06 04:00:00")
+                .depth(100)
+                .latitude(45.67)
+                .longitude(40.67)
+                .magnitude(7.6)
+                .build();
 
-        earthquake.earthquakeAddressInfo = new EarthquakeAddressInfo();
-        earthquake.earthquakeAddressInfo.locality = "Amsterdam";
-        earthquake.earthquakeAddressInfo.postalCode = "1071 CX";
-        earthquake.earthquakeAddressInfo.street = "Paulus Potterstraat";
+        earthquake.earthquakeCountryInfo = EarthquakeCountryInfo.builder()
+                .countryCode("AT")
+                .countryName("Austria")
+                .languages("de-AT,hr,hu,sl")
+                .distance("0")
+                .build();
+
+        earthquake.earthquakeAddressInfo = EarthquakeAddressInfo.builder()
+                .locality("Amsterdam")
+                .postalCode("1071 CX")
+                .street("Paulus Potterstraat")
+                .build();
 
         // assertDoesNotThrow -> hiçbir şey fırlatmayacak anlamına gelir
         assertDoesNotThrow(() -> m_regionInfoRepository.saveEarthquake(earthquake));

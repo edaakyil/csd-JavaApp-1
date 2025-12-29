@@ -16,11 +16,11 @@ create table region_info (
 create table earthquake_info (
 	earthquake_info_id bigserial primary key,
 	region_info_id bigint references region_info(region_info_id) not null,
+	earthquake_id varchar(250),
 	date_time timestamp,
 	depth double precision,
 	latitude double precision,
 	longitude double precision,
-	earthquake_id varchar(250),
 	magnitude double precision
 );
 

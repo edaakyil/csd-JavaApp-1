@@ -4,21 +4,21 @@ import com.edaakyil.earthquake.lib.data.repository.dao.IRegionInfoRepository;
 import com.edaakyil.earthquake.lib.data.repository.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import java.util.stream.StreamSupport;
 
-@SpringBootApplication
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-unittest.properties")
-public class SaveEarthquakeQueryInfoTest {
+public class FindByRegionInfoTest {
     @Autowired
     private IRegionInfoRepository m_regionInfoRepository;
 
     @Test
-    public void givenValue_whenRegionInfoId_thenSaveEarthquakeQueryInfo()
+    public void givenValue_whenLocation_thenFindOne()
     {
         var earthquake = new EarthquakeSave();
 
@@ -53,6 +53,8 @@ public class SaveEarthquakeQueryInfoTest {
 
         m_regionInfoRepository.saveEarthquake(earthquake);
 
-        assertDoesNotThrow(() -> m_regionInfoRepository.saveEarthquakeQueryInfo(1));
+        var earthquakeDetails = m_regionInfoRepository.findByRegionInfo(-66.96, -125, 49.5, 25);
+
+        assertEquals(1, StreamSupport.stream(earthquakeDetails.spliterator(), false).count());
     }
 }
