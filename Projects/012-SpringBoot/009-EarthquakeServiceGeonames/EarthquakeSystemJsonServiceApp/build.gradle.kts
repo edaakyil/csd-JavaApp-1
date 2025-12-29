@@ -33,7 +33,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    implementation("com.edaakyil:GeonamesEarthquakeServiceLib:1.0.0")
+    implementation("com.edaakyil:EarthquakeSystemGeonamesServiceLib:1.0.0")
 }
 
 tasks.withType<Test> {

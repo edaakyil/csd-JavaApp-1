@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>com.edaakyil</groupId>
-    <artifactId>EarthquakeRepositoryLib</artifactId>
+    <artifactId>EarthquakeSystemRepositoryLib</artifactId>
     <version>1.0.0</version>
-    <name>EarthquakeRepositoryLib</name>
+    <name>EarthquakeSystemRepositoryLib</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
