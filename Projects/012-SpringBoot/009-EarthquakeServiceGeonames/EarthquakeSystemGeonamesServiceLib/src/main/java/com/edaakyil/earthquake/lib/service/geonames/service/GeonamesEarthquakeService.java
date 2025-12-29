@@ -17,7 +17,7 @@ public class GeonamesEarthquakeService {
     private final IGeonamesMapper m_mapper;
     private static final String ADDRESS_URL_FORMAT = "http://api.geonames.org/addressJSON?lat=%f&lng=%f&username=edaakyil";
     private static final String COUNTRY_CODE_URL_FORMAT = "http://api.geonames.org/countryCodeJSON?lat=%f&lng=%f&username=edaakyil";
-    private static final String EARTHQUAKE_URL_FORMAT = "http://api.geonames.org/earthquakesJSON?north=%f&south=%f&east=%f&west=%f&username=edaakyil";
+    private static final String EARTHQUAKE_URL_FORMAT = "http://api.geonames.org/earthquakesJSON?east=%f&west=%f&north=%f&south=%f&username=edaakyil";
 
     public GeonamesEarthquakeService(RestTemplate restTemplate, IGeonamesMapper mapper)
     {
@@ -25,13 +25,13 @@ public class GeonamesEarthquakeService {
         m_mapper = mapper;
     }
 
-    private GeonamesEarthQuakeInfo findEarthquakes(double north, double south, double east, double west)
+    private GeonamesEarthquakeInfo findEarthquakes(double east, double west, double north, double south)
     {
-        var url = String.format(EARTHQUAKE_URL_FORMAT, north, south, east, west);
+        var url = String.format(EARTHQUAKE_URL_FORMAT, east, west, north, south);
 
         log.info("GeonamesEarthquakeService.findEarthquakes -> Earthquake url: {}", url);
 
-        return m_restTemplate.getForObject(url, GeonamesEarthQuakeInfo.class);
+        return m_restTemplate.getForObject(url, GeonamesEarthquakeInfo.class);
     }
 
     private GeonamesCountryCode findCountryCode(double latitude, double longitude)
@@ -53,11 +53,11 @@ public class GeonamesEarthquakeService {
         return Objects.requireNonNull(m_restTemplate.getForObject(url, GeonamesAddressInfo.class)).address;
     }
 
-    private GeonamesEarthQuakeDetails toGeonamesEarthQuakeDetails(
-            GeonamesEarthQuake geonamesEarthQuake, GeonamesAddress geonamesAddress, GeonamesCountryCode geonamesCountryCode
+    private GeonamesEarthquakeDetails toGeonamesEarthQuakeDetails(
+            GeonamesEarthquake geonamesEarthQuake, GeonamesAddress geonamesAddress, GeonamesCountryCode geonamesCountryCode
     )
     {
-        var details = new GeonamesEarthQuakeDetails();
+        var details = new GeonamesEarthquakeDetails();
         details.address = m_mapper.toAddressInfo(geonamesAddress);
         details.country = m_mapper.toCountryInfo(geonamesCountryCode);
         details.earthquake = m_mapper.toEarthquakeInfo(geonamesEarthQuake);
@@ -65,7 +65,7 @@ public class GeonamesEarthquakeService {
         return details;
     }
 
-    private void earthquakeDetailsInfoCallback(GeonamesEarthQuake geonamesEarthQuake, List<GeonamesEarthQuakeDetails> details)
+    private void earthquakeDetailsInfoCallback(GeonamesEarthquake geonamesEarthQuake, List<GeonamesEarthquakeDetails> details)
     {
         var address = findAddress(geonamesEarthQuake.lat, geonamesEarthQuake.lng);
         var countryCode = findCountryCode(geonamesEarthQuake.lat, geonamesEarthQuake.lng);
@@ -73,9 +73,9 @@ public class GeonamesEarthquakeService {
         details.add(toGeonamesEarthQuakeDetails(geonamesEarthQuake, address, countryCode));
     }
 
-    private GeonamesEarthQuakeDetailsInfo toGeonamesEarthQuakeDetailsInfo(GeonamesEarthQuakeInfo geonamesEarthQuakeInfo)
+    private GeonamesEarthquakeDetailsInfo toGeonamesEarthQuakeDetailsInfo(GeonamesEarthquakeInfo geonamesEarthQuakeInfo)
     {
-        var detailsInfo = new GeonamesEarthQuakeDetailsInfo();
+        var detailsInfo = new GeonamesEarthquakeDetailsInfo();
         detailsInfo.earthquakes = new ArrayList<>();
 
         geonamesEarthQuakeInfo.earthquakes.forEach(e -> earthquakeDetailsInfoCallback(e, detailsInfo.earthquakes));
@@ -84,9 +84,9 @@ public class GeonamesEarthquakeService {
     }
 
     // Dışarıya vereceğimiz metot (bizim ana metodumuz bu olacak):
-    public GeonamesEarthQuakeDetailsInfo findEarthquakesDetailsInfo(double north, double south, double east, double west)
+    public GeonamesEarthquakeDetailsInfo findEarthquakesDetailsInfo(double east, double west, double north, double south)
     {
-        var earthquakeInfo = findEarthquakes(north, south, east, west);
+        var earthquakeInfo = findEarthquakes(east, west, north, south);
 
         return toGeonamesEarthQuakeDetailsInfo(earthquakeInfo);
     }

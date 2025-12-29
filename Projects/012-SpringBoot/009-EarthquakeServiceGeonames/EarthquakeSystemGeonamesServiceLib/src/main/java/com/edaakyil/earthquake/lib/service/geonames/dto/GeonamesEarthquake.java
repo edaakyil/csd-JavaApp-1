@@ -2,7 +2,7 @@ package com.edaakyil.earthquake.lib.service.geonames.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GeonamesEarthQuake {
+public class GeonamesEarthquake {
     public String eqid;
     @JsonProperty("datetime")
     public String dateTime;

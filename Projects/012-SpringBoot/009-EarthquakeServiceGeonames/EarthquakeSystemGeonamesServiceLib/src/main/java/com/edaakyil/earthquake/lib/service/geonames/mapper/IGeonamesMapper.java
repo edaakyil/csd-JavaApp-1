@@ -14,5 +14,5 @@ public interface IGeonamesMapper {
     @Mapping(source = "lat", target = "latitude")
     @Mapping(source = "lng", target = "longitude")
     @Mapping(source = "eqid", target = "earthquakeId")
-    EarthquakeInfo toEarthquakeInfo(GeonamesEarthQuake geonamesEarthQuake);
+    EarthquakeInfo toEarthquakeInfo(GeonamesEarthquake geonamesEarthQuake);
 }

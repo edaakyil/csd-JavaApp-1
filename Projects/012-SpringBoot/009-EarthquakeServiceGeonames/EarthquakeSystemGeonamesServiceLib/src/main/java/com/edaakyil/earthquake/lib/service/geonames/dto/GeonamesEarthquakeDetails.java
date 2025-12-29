@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Dışarıya vereceğimiz ana dto budur.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GeonamesEarthQuakeDetails {
+public class GeonamesEarthquakeDetails {
     @JsonProperty("earthquakeInfo")
     public EarthquakeInfo earthquake;
 
