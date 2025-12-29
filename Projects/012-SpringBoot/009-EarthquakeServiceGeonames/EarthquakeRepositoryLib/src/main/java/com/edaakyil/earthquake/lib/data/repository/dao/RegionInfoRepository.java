@@ -229,15 +229,6 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     }
 
     @Override
-    public void saveEarthquakeQueryInfo(long regionInfoId)
-    {
-        var paramMap = new HashMap<String, Object>();
-        paramMap.put("region_info_id", regionInfoId);
-
-        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_QUERY_INFO_SQL, paramMap);
-    }
-
-    @Override
     @Transactional
     public void saveEarthquake(EarthquakeSave earthquakeSave)
     {
@@ -260,5 +251,14 @@ public class RegionInfoRepository implements IRegionInfoRepository {
 
             throw new RepositoryException("RegionInfoRepository.saveEarthquake -> RepositoryException", ex);
         }
+    }
+
+    @Override
+    public void saveEarthquakeQueryInfo(long regionInfoId)
+    {
+        var paramMap = new HashMap<String, Object>();
+        paramMap.put("region_info_id", regionInfoId);
+
+        m_namedParameterJdbcTemplate.update(SAVE_EARTHQUAKE_QUERY_INFO_SQL, paramMap);
     }
 }
