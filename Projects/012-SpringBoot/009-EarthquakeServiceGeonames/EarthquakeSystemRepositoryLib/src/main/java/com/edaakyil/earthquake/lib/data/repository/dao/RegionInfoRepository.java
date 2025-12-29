@@ -202,7 +202,7 @@ public class RegionInfoRepository implements IRegionInfoRepository {
     }
 
     @Override
-    public Iterable<EarthquakeDetails> findByRegionInfo(double east, double west, double north, double south)
+    public List<EarthquakeDetails> findByRegionInfo(double east, double west, double north, double south)
     {
         var paramMap = new HashMap<String, Object>();
         paramMap.put("east", east);

@@ -5,8 +5,10 @@ import com.edaakyil.earthquake.lib.data.repository.entity.EarthquakeSave;
 import com.edaakyil.earthquake.lib.data.repository.entity.RegionInfo;
 import com.edaakyil.java.lib.data.repository.ICrudRepository;
 
+import java.util.List;
+
 public interface IRegionInfoRepository extends ICrudRepository<RegionInfo, Long> {
     void saveEarthquakeQueryInfo(long regionInfoId);
     void saveEarthquake(EarthquakeSave earthquakeSave);
-    Iterable<EarthquakeDetails> findByRegionInfo(double east, double west, double north, double south);
+    List<EarthquakeDetails> findByRegionInfo(double east, double west, double north, double south);
 }

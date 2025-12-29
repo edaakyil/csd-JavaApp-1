@@ -7,12 +7,14 @@ import com.edaakyil.java.lib.data.repository.exception.RepositoryException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Slf4j
-public class EarthquakeSystemDataHelper {
+public class RepositoryLibDataHelper {
     private final IRegionInfoRepository m_regionInfoRepository;
 
-    public EarthquakeSystemDataHelper(IRegionInfoRepository regionInfoRepository)
+    public RepositoryLibDataHelper(IRegionInfoRepository regionInfoRepository)
     {
         m_regionInfoRepository = regionInfoRepository;
     }
@@ -24,7 +26,7 @@ public class EarthquakeSystemDataHelper {
         m_regionInfoRepository.saveEarthquake(earthquakeSave);
     }
 
-    public Iterable<EarthquakeDetails> findEarthquakesByRegionInfo(double east, double west, double north, double south)
+    public List<EarthquakeDetails> findEarthquakesByRegionInfo(double east, double west, double north, double south)
     {
         try {
             log.info("EarthquakeSystemDataHelper.findEarthquakesByRegionInfo");

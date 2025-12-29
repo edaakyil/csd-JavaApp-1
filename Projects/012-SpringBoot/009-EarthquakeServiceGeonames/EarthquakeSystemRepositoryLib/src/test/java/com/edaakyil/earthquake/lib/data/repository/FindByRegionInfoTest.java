@@ -12,6 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.stream.StreamSupport;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -60,8 +61,7 @@ public class FindByRegionInfoTest {
 
         var earthquakeDetails = m_regionInfoRepository.findByRegionInfo(-66.96, -125, 49.5, 25);
 
-        //assertTrue(StreamSupport.stream(earthquakeDetails.spliterator(), false).count() > 0);
-        assertTrue(StreamSupport.stream(earthquakeDetails.spliterator(), false).findAny().isPresent());
+        assertFalse(earthquakeDetails.isEmpty());
     }
 
     @Test
@@ -103,6 +103,6 @@ public class FindByRegionInfoTest {
 
         var earthquakeDetails = m_regionInfoRepository.findByRegionInfo(-66.96, -125, 49.5, 29.4);
 
-        assertTrue(StreamSupport.stream(earthquakeDetails.spliterator(), false).findAny().isEmpty());
+        assertTrue(earthquakeDetails.isEmpty());
     }
 }
